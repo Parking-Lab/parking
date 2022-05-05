@@ -5,7 +5,7 @@ This file shows how all files should be documented.
 This area should have a description of the file's contents.
 '''
 
-def divide(numerator: int|float, denomerators: list[int|float], integer: bool = True) -> list[int|float]:
+def divide(numerator: 'int|float', denomerators: 'list[int|float]', integer: 'bool' = True) -> 'list[int|float]':
     """divides numerator by all of the numbers in divisors
 
     Args:
@@ -20,8 +20,9 @@ def divide(numerator: int|float, denomerators: list[int|float], integer: bool = 
         list: the list of numbers from dividing numerator by all of the denomerators
     """
 
-    assert not 0 in denomerators, "dividing by zero is not allowed"
+    #TODO: make this error message more helpful
+    assert not 0 in denomerators, "panic! aaaaaah! something bad happened!" #check for illegal inputs
 
     if integer:
-        return [numerator//d for d in denomerators]
-    return [numerator/d for d in denomerators]
+        return [numerator//d for d in denomerators] # if integer is true, use integer division,
+    return [numerator/d for d in denomerators]      # otherwise use normal division
