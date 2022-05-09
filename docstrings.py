@@ -26,6 +26,3 @@ def divide(numerator: 'int|float', denomerators: 'list[int|float]', integer: 'bo
     if integer:
         return [numerator//d for d in denomerators] # if integer is true, use integer division,
     return [numerator/d for d in denomerators]      # otherwise use normal division
-
-def foo():
-    return "hi!"
