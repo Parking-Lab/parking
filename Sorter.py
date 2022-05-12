@@ -1,7 +1,7 @@
 '''
 Sorter Class
 
-This file contains the Sorter class, which uses SingleLotSorter to  
+This file contains the Sorter class, which uses SingleLotSorter to have rankings for every day of the week for each zone.
 '''
 class Sorter:
     def __init__(self, students: 'list[Student]'):
