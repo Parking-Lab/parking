@@ -28,7 +28,9 @@ def main():
 
     print(wks.get_values('A1:A5'))
 
-    # wks.update_cell(2,2,'hi')
+    wks.update_cell(2,2,'blub')
+
+    print(wks.get_values('B2'))
     
 
 
