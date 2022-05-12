@@ -104,3 +104,18 @@ class Sorter:
         """
         return {'REG': [Student()], 'SMA': [], 'PAR': []}
 
+    def __iter__(self):
+        """initialization method for for loops.
+
+        Returns:
+            Sorter: this Sorter object, initialized for iteration
+        """
+        pass
+
+    def __next__(self):
+        """gets the next element in self.
+
+        Returns:
+            Student: the next ranked student.
+        """
+        pass
