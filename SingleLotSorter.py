@@ -1,17 +1,14 @@
 '''
-SingleLotSorter Class
+Sorter Class
 
-This class holds students, and sorts them based on rank. Each SingleLotSorter is specific to one 
-parking zone, so they all sort slightly differently. This class is used by the SingleLotSorter
-class, which actually sorts students into zones based on their score for each zone.
+This class holds students, and sorts them based on rank.
 '''
-class SingleLotSorter:
-    def __init__(self, students: 'list[Student]', zone: str):
-        """constructor for SingleLotSorter object. sorts students upon intialization.
+class Sorter:
+    def __init__(self, students: 'list[Student]'):
+        """constructor for Sorter object. sorts students upon intialization.
 
         Args:
             students (list[students]): a list of all students to be sorted
-            zone (str): the zone this SingleLotSorter represents. can be 'REG', 'SMA', or 'PAR'
         """
         pass
 
@@ -27,7 +24,7 @@ class SingleLotSorter:
         """updates the current students matching the keys in `newStudents` with their corrosponding values.
 
         Raises:
-            KeyError: if a key in the newStudents doesn't exist in this SingleLotSorter.
+            KeyError: if a key in the newStudents doesn't exist in this Sorter.
 
         Args:
             newStudents (dict[Student, Student]): dict of updates, in the form {current: new, current: new, ...}
@@ -42,7 +39,7 @@ class SingleLotSorter:
             index (int|str|Student, optional): if int, returns student in that rank (0 is best, can be negative, return Student). If str, returns rank of student with that name (int). If Student, returns rank of that Student (int). Defaults to -1.
 
         Raises:
-            KeyError: if the str name or Student passed does not exist in the SingleLotSorter
+            KeyError: if the str name or Student passed does not exist in the Sorter
             IndexError: if the int rank passed is out of range (ie not that many students exist) or if you entered a day that doesn't exist
             TypeError: if you try to get the student at rank 2.5
 
@@ -67,7 +64,7 @@ class SingleLotSorter:
         """deletes the student at the rank, with the name, or equal to the Student.
 
         Raises:
-            KeyError: if the str name or Student passed does not exist in the SingleLotSorter
+            KeyError: if the str name or Student passed does not exist in the Sorter
             IndexError: if the int rank passed is out of range (ie not that many students exist)
             TypeError: if you try to get the student at rank 2.5
 
@@ -77,17 +74,17 @@ class SingleLotSorter:
         """
         pass
 
-    def __add__(self, other: 'SingleLotSorter'):
-        """merges this an the other SingleLotSorter together, and returns the result. Does not modify either SingleLotSorter.
+    def __add__(self, other: 'Sorter'):
+        """merges this an the other Sorter together, and returns the result. Does not modify either Sorter.
 
         Args:
-            other (Sorter): the other SingleLotSorter to merge this one with
+            other (Sorter): the other Sorter to merge this one with
 
         Raises:
-            TypeError: if you try to merge with a non-SingleLotSorter object (if you don't pass a SingleLotSorter)
+            TypeError: if you try to merge with a non-Sorter object (if you don't pass a Sorter)
 
         Returns:
-            SingleLotSorter: the merge result
+            Sorter: the merge result
         """
         pass
 
@@ -95,6 +92,15 @@ class SingleLotSorter:
         """Uses binary search to insert a Student into the correct position in the sorted list.
 
         Args:
-            student (Student): the student to insert into the SingleLotSorter.
+            student (Student): the student to insert into the Sorter.
         """
+        pass
+
+    def getAssignments(self):
+        """gets the final assignments for the week's parking
+
+        Returns:
+            list[dict[str, list[Student]]]: list of a dict for each day containing {parking zone: list of student objects}
+        """
+        return {'REG': [Student()], 'SMA': [], 'PAR': []}
 
