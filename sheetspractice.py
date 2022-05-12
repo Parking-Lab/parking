@@ -25,6 +25,10 @@ def main():
 
     print("rows:", wks.row_count)
     print("columns:", wks.col_count)
+
+    print(wks.get_values('A1:A5'))
+
+    # wks.update_cell(2,2,'hi')
     
 
 
