@@ -58,7 +58,7 @@ class Sorter:
         """
         pass
     
-    def delete(*student: 'int|str|Student'):
+    def delete(day: int, *student: 'int|str|Student'):
         """deletes the student at the rank, with the name, or equal to the Student.
 
         Raises:
@@ -67,6 +67,7 @@ class Sorter:
             TypeError: if you try to get the student at rank 2.5
 
         Args:
+            day (int): the day of the week, in range [0, 4], that you want the rank to reference
             student (int|str|Student, multiple accepted): the student to delete. Specify rank (can be negative), name, or an identical Student object.
         """
         pass
@@ -76,8 +77,13 @@ class Sorter:
         
         Returns:
             tuple[
-                dict[str, list[Student]]
-                dict[str, list[Student]]
-            ]: first dict is dict of {parking zone: list of students there} representing the assignments, second dict is same thing describing waitlist
+                tuple[
+                    dict[str, list[Student]]
+                    dict[str, list[Student]]
+                ]
+            ]
+                first dict is dict of {parking zone: list of students there} representing the assignments
+                second dict is same thing, but describing waitlist
+                this pair is repeated for each day of the week.
         """
         pass
