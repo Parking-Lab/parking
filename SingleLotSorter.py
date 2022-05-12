@@ -15,7 +15,7 @@ class SingleLotSorter:
         """
         pass
 
-    def add(*student: 'Student'):
+    def add(self, *student: 'Student'):
         """Adds `student` to the list of students, and places them in the correct order
 
         Args:
@@ -23,7 +23,7 @@ class SingleLotSorter:
         """
         pass
 
-    def update(newStudents: 'dict[Student, Student]'):
+    def update(self, newStudents: 'dict[Student, Student]'):
         """updates the current students matching the keys in `newStudents` with their corrosponding values.
 
         Raises:
@@ -34,7 +34,7 @@ class SingleLotSorter:
         """
         pass
 
-    def __getitem__(day: int, index: 'int|str|Student' = 0):
+    def __getitem__(self, day: int, index: 'int|str|Student' = 0):
         """gets an item, using subscript notation like a list. Takes an int (rank), str (student's name), or Student (actual equivalent student object).
 
         Args:
@@ -52,7 +52,7 @@ class SingleLotSorter:
 
         return
     
-    def pop(day: int):
+    def pop(self, day: int):
         """returns (and deletes) top ranked student, like pop function in a standard queue.
 
         Args:
@@ -63,7 +63,7 @@ class SingleLotSorter:
         """
         pass
 
-    def delete(day: int, student: 'int|str|Student'):
+    def delete(self, day: int, student: 'int|str|Student'):
         """deletes the student at the rank, with the name, or equal to the Student.
 
         Raises:
@@ -77,7 +77,7 @@ class SingleLotSorter:
         """
         pass
 
-    def __add__(other: 'SingleLotSorter'):
+    def __add__(self, other: 'SingleLotSorter'):
         """merges this an the other SingleLotSorter together, and returns the result. Does not modify either SingleLotSorter.
 
         Args:
@@ -91,7 +91,7 @@ class SingleLotSorter:
         """
         pass
 
-    def _insert(student: 'Student'):
+    def _insert(self, student: 'Student'):
         """Uses binary search to insert a Student into the correct position in the sorted list.
 
         Args:
