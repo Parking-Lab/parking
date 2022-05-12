@@ -59,4 +59,18 @@ class Sorter:
         Args:
             student (int|str|Student): the student to delete. Specify rank (can be negative), name, or an identical Student object.
         """
+        pass
 
+    def __add__(other: 'Sorter'):
+        """merges this an the other sorter together, and returns the result. Does not modify either sorter.
+
+        Args:
+            other (Sorter): the other sorter to merge this one with
+
+        Raises:
+            TypeError: if you try to merge with a non-sorter object (if you don't pass a sorter)
+
+        Returns:
+            Sorter: the merge result
+        """
+        pass
