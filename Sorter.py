@@ -1,6 +1,6 @@
 class Sorter:
     def __init__(self, students: 'list[Student]'):
-        """constructor for sorter object
+        """constructor for sorter object. sorts students upon intialization.
 
         Args:
             students (list[students]): a list of all students to be sorted
@@ -23,14 +23,14 @@ class Sorter:
         """
         pass
 
-    def __getitem__(index: 'int|String|Student' = 0):
-        """gets an item, using subscript notation like a list. Takes an int (rank), String (student's name), or Student (actual equivalent student object).
+    def __getitem__(index: 'int|str|Student' = 0):
+        """gets an item, using subscript notation like a list. Takes an int (rank), str (student's name), or Student (actual equivalent student object).
 
         Args:
-            index (int|String|Student, optional): if int, returns student in that rank (0 is best, can be negative, return Student). If String, returns rank of student with that name (int). If Student, returns rank of that Student (int). Defaults to -1.
+            index (int|str|Student, optional): if int, returns student in that rank (0 is best, can be negative, return Student). If str, returns rank of student with that name (int). If Student, returns rank of that Student (int). Defaults to -1.
 
         Raises:
-            KeyError: if the String or Student passed does not exist in the sorter.
+            KeyError: if the str name or Student passed does not exist in the sorter
             IndexError: if the int rank passed is out of range (ie not that many students exist)
             TypeError: if you try to get the student at rank 2.5
 
@@ -48,4 +48,15 @@ class Sorter:
         """
         pass
 
-    
+    def delete(student: 'int|str|Student'):
+        """deletes the student at the rank, with the name, or equal to the Student.
+
+        Raises:
+            KeyError: if the str name or Student passed does not exist in the sorter
+            IndexError: if the int rank passed is out of range (ie not that many students exist)
+            TypeError: if you try to get the student at rank 2.5
+
+        Args:
+            student (int|str|Student): the student to delete. Specify rank (can be negative), name, or an identical Student object.
+        """
+
