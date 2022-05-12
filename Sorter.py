@@ -13,7 +13,7 @@ class Sorter:
         pass
 
     @property
-    def REG():
+    def REG(self):
         """accessor for REG SingleLotSorter. Allows users to do Sorter.REG[0] to get first rank for reg zone, for example.
 
         Returns:
@@ -22,7 +22,7 @@ class Sorter:
         pass
 
     @property
-    def SMA():
+    def SMA(self):
         """Accessor for SMA SingleLotSorter. Allows users to do Sorter.SMA[0] to get the first rank for reg zone, for example.
 
         Returns:
@@ -31,7 +31,7 @@ class Sorter:
         pass
 
     @property
-    def PAR():
+    def PAR(self):
         """Accessor for PAR SingleLotSorter. Allows users to do Sorter.PAR[0] to get the first rank for reg zone, for example.
 
         Returns:
@@ -39,7 +39,7 @@ class Sorter:
         """
         pass
     
-    def update(newStudents: 'dict[Student, Student]'):
+    def update(self, newStudents: 'dict[Student, Student]'):
         """updates the current students matching the keys in `newStudents` with their corrosponding values.
 
         Raises:
@@ -50,7 +50,7 @@ class Sorter:
         """
         pass
 
-    def add(*student: 'Student'):
+    def add(self, *student: 'Student'):
         """Adds a Student to all of the sorters.
 
         Args:
@@ -58,7 +58,7 @@ class Sorter:
         """
         pass
     
-    def delete(day: int, *student: 'int|str|Student'):
+    def delete(self, day: int, *student: 'int|str|Student'):
         """deletes the student at the rank, with the name, or equal to the Student.
 
         Raises:
@@ -72,7 +72,7 @@ class Sorter:
         """
         pass
     
-    def getAssignments():
+    def getAssignments(self):
         """gets the final assignments based on the rankings for this week.
         
         Returns:
