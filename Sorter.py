@@ -50,5 +50,34 @@ class Sorter:
         """
         pass
 
+    def add(*student: 'Student'):
+        """Adds a Student to all of the sorters.
+
+        Args:
+            student (Student, multiple accepted): the student(s) to add
+        """
+        pass
     
+    def delete(*student: 'int|str|Student'):
+        """deletes the student at the rank, with the name, or equal to the Student.
+
+        Raises:
+            KeyError: if the str name or Student passed does not exist in the SingleLotSorter
+            IndexError: if the int rank passed is out of range (ie not that many students exist)
+            TypeError: if you try to get the student at rank 2.5
+
+        Args:
+            student (int|str|Student, multiple accepted): the student to delete. Specify rank (can be negative), name, or an identical Student object.
+        """
+        pass
     
+    def getAssignments():
+        """gets the final assignments based on the rankings for this week.
+        
+        Returns:
+            tuple[
+                dict[str, list[Student]]
+                dict[str, list[Student]]
+            ]: first dict is dict of {parking zone: list of students there} representing the assignments, second dict is same thing describing waitlist
+        """
+        pass
