@@ -4,7 +4,7 @@ Sorter Class
 This class holds students, and sorts them based on rank.
 '''
 class Sorter:
-    def __init__(self, students: 'list[Student]'):
+    def __init__(self, students: 'list[Student]') -> 'None':
         """constructor for Sorter object. sorts students upon intialization.
 
         Args:
@@ -12,7 +12,7 @@ class Sorter:
         """
         pass
 
-    def add(self, *student: 'Student'):
+    def add(self, *student: 'Student') -> 'None':
         """Adds `student` to the list of students, and places them in the correct order
 
         Args:
@@ -20,7 +20,7 @@ class Sorter:
         """
         pass
 
-    def update(self, newStudents: 'dict[Student, Student]'):
+    def update(self, newStudents: 'dict[Student, Student]') -> 'None':
         """updates the current students matching the keys in `newStudents` with their corrosponding values.
 
         Raises:
@@ -31,7 +31,7 @@ class Sorter:
         """
         pass
 
-    def __getitem__(self, day: int, index: 'int|str|Student' = 0):
+    def __getitem__(self, day: int, index: 'int|str|Student' = 0) -> 'Student|int':
         """gets an item, using subscript notation like a list. Takes an int (rank), str (student's name), or Student (actual equivalent student object).
 
         Args:
@@ -49,7 +49,7 @@ class Sorter:
 
         return
     
-    def pop(self, day: int):
+    def pop(self, day: int) -> 'tuple[Student, int]':
         """returns (and deletes) top ranked student, like pop function in a standard queue.
 
         Args:
@@ -60,7 +60,7 @@ class Sorter:
         """
         pass
 
-    def delete(self, day: int, student: 'int|str|Student'):
+    def delete(self, day: int, student: 'int|str|Student') -> 'None':
         """deletes the student at the rank, with the name, or equal to the Student.
 
         Raises:
@@ -74,7 +74,7 @@ class Sorter:
         """
         pass
 
-    def __add__(self, other: 'Sorter'):
+    def __add__(self, other: 'Sorter') -> 'Sorter':
         """merges this an the other Sorter together, and returns the result. Does not modify either Sorter.
 
         Args:
@@ -88,7 +88,7 @@ class Sorter:
         """
         pass
 
-    def _insert(self, student: 'Student'):
+    def _insert(self, student: 'Student') -> 'None':
         """Uses binary search to insert a Student into the correct position in the sorted list.
 
         Args:
@@ -96,15 +96,15 @@ class Sorter:
         """
         pass
 
-    def getAssignments(self):
+    def getAssignments(self) -> 'tuple[dict[str, list[Student]]]':
         """gets the final assignments for the week's parking
 
         Returns:
-            list[dict[str, list[Student]]]: list of a dict for each day containing {parking zone: list of student objects}
+            tuple[dict[str, list[Student]]]: list of a dict for each day containing {parking zone: list of student objects}
         """
-        return {'REG': [Student()], 'SMA': [], 'PAR': []}
+        pass
 
-    def __iter__(self):
+    def __iter__(self) -> 'Sorter':
         """initialization method for for loops.
 
         Returns:
@@ -112,7 +112,7 @@ class Sorter:
         """
         pass
 
-    def __next__(self):
+    def __next__(self) -> 'Student':
         """gets the next element in self.
 
         Returns:
