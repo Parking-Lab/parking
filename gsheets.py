@@ -6,6 +6,9 @@ Google Sheets Class (GSheet):
         Get and set values on Google Sheet
         Provide information for sorting classes
         Maintain and format Google Sheet
+    NOTE 1: Google Sheets API has limits to usage. Must keep under 60 read and 60 write requests
+    NOTE 2: To get around NOTE 1, only read entire sheet once and write to a file. Sort, edit, read, do whatever. 
+            Then at the very end, update the Google Sheet. lol...
 
 Notes:
 - more functionality such as formatting can be added later once we have an idea of what the sheet will look like
@@ -84,6 +87,22 @@ class GSheet():
             AssertionError: raises an error if row does not exist
         """
 
+    def deleteRow(self, row, wks):
+        """Deletes a row from a worksheet
+
+        Args:
+            row (int): row to be cleared
+            wks (str): specific worksheet
+        """
+    
+    def deleteCol(self, col, wks):
+        """Deletes a column from a worksheet
+
+        Args:
+            col (int): row to be cleared
+            wks (str): specific worksheet
+        """
+
     def clearWorksheet(self, wks):
         """Clears the cells in a worksheet
 
@@ -97,6 +116,8 @@ class GSheet():
         Args:
             wks (str): creates worksheet with title wks
         """
+
+    
     
         
 
