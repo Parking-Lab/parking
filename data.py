@@ -45,17 +45,9 @@ class Data:
                         'Parallel Parking'
                     ]
         self.finalData = []
-        self.formatAllInfo()
+        self._formatAllInfo()
 
-    def loadResults(self, newResults:list[list]):
-        """Given an array of the new parking results, updates the Google sheet
-
-        Args:
-            newResults (list[list]): new parking results
-        """
-        self.resultsInfo.updateSheet(newResults) # that's it!
-
-    def formatAllInfo(self):
+    def _formatAllInfo(self):
         """Formats all info
         """
         self.finalData = []
@@ -158,6 +150,14 @@ class Data:
             list: a list describing the order of the info outputted
         """
         return self.key
+
+    def loadResults(self, newResults:list[list]):
+        """Given an array of the new parking results, updates the Google sheet
+
+        Args:
+            newResults (list[list]): new parking results
+        """
+        self.resultsInfo.updateSheet(newResults) # that's it!
 
         
 def main():
