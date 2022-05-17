@@ -13,7 +13,7 @@ This class holds information for the student object
 '''
 
 class Student:
-    def __init__(self,row,day,sheet):
+    def __init__(self,row,day,form_sheet,weight_sheet):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
         Args:
@@ -29,12 +29,18 @@ class Student:
         '''
         #do we run the program for the specific day or for all days at once?
 
+        #save the weights sheet to the computer every time for up to dateness?
+
+        #score
+        self.score = 0
+
+
         #day of the week that this program is being run for
         self.day = day
             
-        self.sheet = sheet
-
-        self.row = self.sheet.getRow(row,'xxx.smth')
+        self.form_sheet = form_sheet
+        
+        self.row = self.form_sheet.getRow(row,'form_sheet.smth')
 
         self.name = self.row[0]
         self.car = self.row[1]
@@ -64,7 +70,29 @@ class Student:
         
         self.zone = ''
         
-        pass
+        #WEIGHTS
+        self.weight_sheet = weight_sheet
+        #has to retrieve the second row from the weights sheet
+        self.weight_column = self.weight_sheet.getColumn(2,'weight_sheet.smth')
+
+        self.carpoolUnder_weight = self.weight_column[2]
+        self.carpoolSenior_weight = self.weight_column[3]
+        self.fpfree_weight = self.weight_column[4]
+        self.lpfree_weight = self.weight_column[5]
+
+        self.sports_weight = self.weight_column[6]
+        self.crit_weight = self.weight_column[7]
+        
+        self.commute_weight = self.weight_column[8]
+        self.strike_weight = self.weight_column[9]
+        self.crash_weight = self.weight_column[10]
+        
+        
+        
+        
+
+        
+        
 
     def generateScore(self):
         '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone
@@ -73,6 +101,8 @@ class Student:
 
 
         '''To be written by Nambita and Aditya'''
+
+        pass
 
 
     
