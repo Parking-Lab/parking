@@ -3,6 +3,8 @@ Sorter Class
 
 This class holds students, and sorts them based on rank.
 '''
+
+#note: results should be outputted in an array to ensure it can be read by the GSheet class in a rowxrow format
 class Sorter:
     def __init__(self, students: 'list[Student]') -> 'None':
         """constructor for Sorter object. sorts students upon intialization.
