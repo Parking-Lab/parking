@@ -26,9 +26,10 @@ def main():
     sa = gspread.service_account()
     sh = sa.open("CSUS Parking Data")
 
-    wks = sh.worksheet("Testing")
+    wks = sh.worksheet("BaseInfo")
 
     # print("rows:", wks.row_count)
+    print('5/17/2022 10:54:13' > '5/17/2022 10:33:29')
     # print("columns:", wks.col_count)
 
     # cellList = wks.range('A2:I4')
@@ -38,19 +39,25 @@ def main():
     # wks.update_cells(cellList)
 
     # print(wks.get_all_values())
-    print(wks.row_values(1))
-    wks.get_values()
+    # numRows = len(wks.get_all_values())
+    # print(wks.row_values(1))
+    # wks.get_values()
 
-    row = 1
-    col = 6
+    # row = 1
+    # col = 6
 
-    wks.update_cell(row, col, "lol")
+    # wks.update_cell(row, col, "lol")
     # wks.delete_row(2)
     # wks.insert_row(['hi','hi','hi','hi'], 2)
     # wks.delete_columns(1,6)
     # wks.delete_row(2)
     # wks.insert_row([], 2)
-    wks.clear()
+
+    # wks.delete_rows(2,numRows)
+
+    # print(wks.row_values(1))
+    # wks.get_values()
+
 
     # col = chr(ord('A') + (col-1))
     # row = str(row)
@@ -58,12 +65,12 @@ def main():
     # print(coord)
     # print(wks.get_values(coord)[0][0])
 
-    weeklyInfo = open("weeklyInfo.txt", "w")
-    weeklyData = wks.get_all_values()
-    for row in weeklyData:
-        weeklyInfo.write("\t".join(row) + "\n")
+    # weeklyInfo = open("weeklyInfo.txt", "w")
+    # weeklyData = wks.get_all_values()
+    # for row in weeklyData:
+    #     weeklyInfo.write("\t".join(row) + "\n")
 
-    weeklyInfo.close()
+    # weeklyInfo.close()
 
     # wks.update_cell(2,2,'blub')
 
