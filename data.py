@@ -17,11 +17,13 @@ NOTE:
 
 from baseInfo import BaseInfo
 from weeklyInfo import WeeklyInfo 
+from resultsInfo import ResultsInfo
 
 class Data:
     def __init__(self):
         self.baseInfo = BaseInfo() # create the object, automatically gets info and formats it
         self.weeklyInfo = WeeklyInfo() # create the object, automatically gets info and formats it
+        self.resultsInfo = ResultsInfo() # create the object...
         self.key = [
                         'Name',
                         'Car Size',
@@ -44,8 +46,14 @@ class Data:
                     ]
         self.finalData = []
         self.formatAllInfo()
-    
-    # make this as nice as possible :)
+
+    def loadResults(self, newResults:list[list]):
+        """Given an array of the new parking results, updates the Google sheet
+
+        Args:
+            newResults (list[list]): new parking results
+        """
+        self.resultsInfo.updateSheet(newResults) # that's it!
 
     def formatAllInfo(self):
         """Formats all info
