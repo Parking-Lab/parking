@@ -24,12 +24,12 @@ import gspread
 
 def main():
     sa = gspread.service_account()
-    sh = sa.open("CSUS Parking Data")
+    # sh = sa.open("CSUS Parking Data")
 
-    wks = sh.worksheet("BaseInfo")
+    # wks = sh.worksheet("BaseInfo")
 
     # print("rows:", wks.row_count)
-    print('5/17/2022 10:54:13' > '5/17/2022 10:33:29')
+    # print('5/17/2022 10:54:13' > '5/17/2022 10:33:29')
     # print("columns:", wks.col_count)
 
     # cellList = wks.range('A2:I4')

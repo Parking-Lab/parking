@@ -115,6 +115,66 @@ class BaseInfo:
         """
         email = email.lower()
         return self.infoDict[email][0] == 'Yes'
+    
+    def getCarSize(self, email:'str') -> bool:
+        """Returns student's car size (true if Large, false if small)
+
+        Args:
+            email (str): email
+
+        Returns:
+            bool: true if user has a large car
+        """
+        email = email.lower()
+        return self.infoDict[email][4] == 'Large'
+    
+    def getAddress(self, email:'str') -> int:
+        """Returns student's zip code
+
+        Args:
+            email (str): email
+
+        Returns:
+            int: the zip code
+        """
+        email = email.lower()
+        return int(self.infoDict[email][5])
+    
+    def getPara(self, email:'str') -> bool:
+        """Returns student's ability to parallel park
+
+        Args:
+            email (str): email
+
+        Returns:
+            bool: True if can park
+        """
+        email = email.lower()
+        return self.infoDict[email][3] == 'Yes'
+
+    def getFirstPeriod(self, email:'str') -> bool:
+        """Returns student's first period status
+
+        Args:
+            email (str): email
+
+        Returns:
+            bool: True if first period free
+        """
+        email = email.lower()
+        return self.infoDict[email][1] == 'Yes'
+
+    def getLastPeriod(self, email:'str') -> bool:
+        """Returns student's last period status
+
+        Args:
+            email (str): email
+
+        Returns:
+            bool: True if last period free
+        """
+        email = email.lower()
+        return self.infoDict[email][2] == 'Yes'
 
         
 

@@ -15,6 +15,7 @@ NOTE:
 - it is completely okay if the base info form responses are accidentally deleted! It would just prevent people from editing their forms, but they can just submit a new form because our program cleans up the information by only keeping the most recent entries
 '''
 
+from html.entities import name2codepoint
 from baseInfo import BaseInfo
 from weeklyInfo import WeeklyInfo 
 
@@ -55,7 +56,8 @@ class Data:
             formattedRow = []
             # ignore if not eligible to drive
             name = person[1]
-            print(name)
+            # print(name)
+            if not self.baseInfo.userInfoFound(name): continue
             if not(person[2] or self.baseInfo.userEligible(name)): continue # if not eligible, don't include them
             
             # 'Name',
@@ -63,10 +65,13 @@ class Data:
             formattedRow.append(formatName)
 
             # 'Car Size',
+            if self.baseInfo.getCarSize(name): formattedRow.append(1)
+            else: formattedRow.append(0)
             
-            # 'Distance (time)',
-            time = 0
-            formattedRow.append(time)
+            # 'Distance (time)', 
+            zipcode = self.baseInfo.getAddress(name)
+            time = 0 # TODO: integrate with actual calculations
+            formattedRow.append(zipcode)
             
             # 'Monday Critical Access',
             if 'Monday' in person[5]: formattedRow.append(1)
@@ -117,14 +122,19 @@ class Data:
             else: formattedRow.append(0)
 
             # 'First Period Free',
-            formattedRow.append(formatName)
-            # 'Last Period Free',
-            formattedRow.append(formatName)
-            # 'Parallel Parking'
-            formattedRow.append(formatName)
+            if self.baseInfo.getFirstPeriod(name): formattedRow.append(1)
+            else: formattedRow.append(0)
 
-    
-            
+            # 'Last Period Free',
+            if self.baseInfo.getLastPeriod(name): formattedRow.append(1)
+            else: formattedRow.append(0)
+
+            # 'Parallel Parking'
+            if self.baseInfo.getPara(name): formattedRow.append(1)
+            else: formattedRow.append(0)
+
+            self.finalData.append(formattedRow)
+
     
     def getFormattedInfo(self) -> list[list]:
         """Gets all information in a formatted fashion (not ordered by name, but abides by set format in TRUE_WEIGHTS)
@@ -146,6 +156,7 @@ class Data:
 
 def main():
     data = Data()
-    print(data.getFormattedInfo())
+    # print(data.getKey())
+    # print(data.getFormattedInfo())
 
 if __name__ == '__main__': main()
