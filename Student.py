@@ -11,6 +11,7 @@ Student Class
 
 This class holds information for the student object
 '''
+from Data import Data
 
 import json
 from Data import Data
