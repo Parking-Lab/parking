@@ -8,7 +8,7 @@ Weekly Info Class (WeeklyInfo):
 
 import gspread
 
-class WeeklyInfo:
+class WeeklyInfo():
     def __init__(self):
         """Creates a new class that represents the base info sheet
         """
@@ -66,7 +66,7 @@ class WeeklyInfo:
         """
         self.infoDict = {} # based off of email
         for row in self.allInfo:
-            self.infoDict[row[1]] = row[2:] 
+            self.infoDict[row[1].lower()] = row[2:] 
 
     def getUserInfo(self, email:'str') -> list:
         """Gets user's base info given name (accesses dictionary)
@@ -77,6 +77,7 @@ class WeeklyInfo:
         Returns:
             list: all info for queried user (columns C-H)
         """
+        email = email.lower()
         return self.infoDict[email]
 
 
@@ -87,16 +88,48 @@ class WeeklyInfo:
             list: the first row of the worksheet
         """
         return self.key
+
+    def getAllInfo(self) -> list[list]:
+        """Gets all info
+
+        Returns:
+            list[list]: all values
+        """
+        return self.allInfo
+    
+    def userInfoFound(self, email:'str') -> bool:
+        """Returns if student's base info is found
+
+        Args:
+            email (str): _description_
+
+        Returns:
+            bool: true if found, false if not
+        """
+        email = email.lower()
+        return email in self.infoDict
+
+    def userEligible(self, email:'str') -> bool:
+        """Returns student's eligibility for driving
+
+        Args:
+            email (str): email
+
+        Returns:
+            bool: true if user can drive
+        """
+        email = email.lower()
+        return self.infoDict[email][0] == 'Yes'
         
 
     
 def main():
     weeklyInfo = WeeklyInfo()
-    # baseInfo.clearSheet(True)
-    # baseInfo.removeDuplicates()
-    # baseInfo.updateSheet()
-    # print(baseInfo.getUserInfo("alisonsoong@gmail.com"))
-    # print(baseInfo.getKey())
+    # weeklyInfo.clearSheet(True)
+    # weeklyInfo.removeDuplicates()
+    # weeklyInfo.updateSheet()
+    # print(weeklyInfo.getUserInfo("alisonsoong@gmail.com"))
+    # print(weeklyInfo.getKey())
 
 
 

@@ -69,7 +69,7 @@ class BaseInfo:
         """
         self.infoDict = {} # based off of email
         for row in self.allInfo:
-            self.infoDict[row[1]] = row[2:] 
+            self.infoDict[row[1].lower()] = row[2:] # make sure usernames are all lowercase 
 
     def getUserInfo(self, email:'str') -> list:
         """Gets user's base info given name (accesses dictionary)
@@ -80,6 +80,7 @@ class BaseInfo:
         Returns:
             list: all info for queried user (columns C-H)
         """
+        email = email.lower()
         return self.infoDict[email]
 
 
@@ -90,6 +91,31 @@ class BaseInfo:
             list: the first row of the worksheet
         """
         return self.key
+
+    def userInfoFound(self, email:'str') -> bool:
+        """Returns if student's base info is found
+
+        Args:
+            email (str): _description_
+
+        Returns:
+            bool: true if found, false if not
+        """
+        email = email.lower()
+        return email in self.infoDict
+
+    def userEligible(self, email:'str') -> bool:
+        """Returns student's eligibility for driving
+
+        Args:
+            email (str): email
+
+        Returns:
+            bool: true if user can drive
+        """
+        email = email.lower()
+        return self.infoDict[email][0] == 'Yes'
+
         
 
     
@@ -100,6 +126,7 @@ def main():
     # baseInfo.updateSheet()
     # print(baseInfo.getUserInfo("alisonsoong@gmail.com"))
     # print(baseInfo.getKey())
+    # print(baseInfo.userEligible('alisonsoong@gmail.com'))
 
 
 

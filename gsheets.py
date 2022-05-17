@@ -23,6 +23,12 @@ Notes:
 import gspread
 
 class GSheet():
+    def __init__(self):
+        print("this is no longer used lol")
+
+
+'''
+class GSheet():
     def __init__(self, sa, name:str, wks:str):
         """
         Creates a GSheet class
@@ -181,10 +187,9 @@ class GSheet():
         """
         col = chr(ord('A') + (col-1))
         row = str(row)
-        return col + row
+        return col + row 
 
-    
-    
+'''
         
 
     
