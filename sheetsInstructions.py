@@ -13,12 +13,13 @@ pip install gspread
 mkdir ~/.config/gspread
 cp Downloads/parking_service_account.json ~/.config/gspread/service_account.json
 
-
 TODO:
 make this easier by creating an installation packet-like thing...
-create an executable instead? One for installation, one for running the program
+create an executable instead? One for installation, one for running the program.. if this is possible ;-;
 
 '''
+
+# just me testing stuff out :D
 
 import gspread
 

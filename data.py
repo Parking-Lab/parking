@@ -15,7 +15,6 @@ NOTE:
 - it is completely okay if the base info form responses are accidentally deleted! It would just prevent people from editing their forms, but they can just submit a new form because our program cleans up the information by only keeping the most recent entries
 '''
 
-from html.entities import name2codepoint
 from baseInfo import BaseInfo
 from weeklyInfo import WeeklyInfo 
 
@@ -153,7 +152,6 @@ class Data:
         return self.key
 
         
-
 def main():
     data = Data()
     # print(data.getKey())
