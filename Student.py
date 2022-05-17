@@ -12,6 +12,8 @@ Student Class
 This class holds information for the student object
 '''
 import json
+from Data import Data
+
 class Student:
 
     #! this code runs at *definition*, so basically when this file is imported.
@@ -43,9 +45,10 @@ class Student:
         #day of the week that this program is being run for
         self.day = day
             
-        self.form_sheet = form_sheet
+        self.data = Data()
+        self.data.getFormattedInfo()
         
-        self.row = self.form_sheet.getRow(row,'form_sheet.smth')
+        self.row = self.data[row]
 
         self.name = self.row[0]
         self.car = self.row[1]
