@@ -18,11 +18,10 @@ Notes:
 
 '''
 
-
 import gspread
 
 class GSheet():
-    def __init__(self, sa, name):
+    def __init__(self, sa, name, wks=None):
         """
         Creates a GSheet class
 
@@ -35,13 +34,50 @@ class GSheet():
         """
         self.sa = sa #service account
         self.sh = self.sa.open(name)
+        if (wks == None):
+            self.createWorksheet(wks)
+        else: self.wks = self.sh.worksheet(wks)
+        
+
+    def getCell(self, row, col):
+        """Returns the value of a sheet 
+
+        Args:
+            row (int): cell's row
+            col (int): cell's column
+
+        Raises:
+            AssertionError: raises an error if cell does not exist
+        """
+        try:
+            coord = self.getCoord(row, col)
+            return self.wks.get_values(coord)[0][0]
+        except:
+            print("getCell Error: Not a valid cell")
+            return []
+
+    def setCell(self, row, col, value):
+        """Changes a cell's value given row, col, and new value
+
+        Args:
+            row (int): cell's row
+            col (int): cell's column
+            value (str): new value for cell
+
+        Raises:
+            AssertionError: raises an error if cell does not exist
+        """
+        try:
+            self.wks.update_cell(row, col, value)
+        except:
+            print("setCell Error: Not a valid cell")
+
     
-    def getRow(self, row, wks):
+    def getRow(self, row):
         """Gets a row from the sheet and returns its values as a list
 
         Args:
             row (int): row to be returned
-            wks (str): specific worksheet
 
         Raises:
             AssertionError: raises an error if row does not exist
@@ -49,73 +85,103 @@ class GSheet():
         Returns:
             list of values
         """
+        try:
+            return self.wks.row_values(row)
+        except:
+            print("getRow Error: Not a valid row")
+            return []
+        
 
-    def getCell(self, row, col, wks):
-        """Returns the value of a sheet 
-
-        Args:
-            row (int): cell's row
-            col (int): cell's column
-            wks (str): specific worksheet
-
-        Raises:
-            AssertionError: raises an error if cell does not exist
-        """
-
-    def setCell(self, row, col, value, wks):
-        """Changes a cell's value given row, col, and new value
-
-        Args:
-            row (int): cell's row
-            col (int): cell's column
-            value (str): new value for cell
-            wks (str): specific worksheet
-
-        Raises:
-            AssertionError: raises an error if cell does not exist
-        """
-
-    def setRow(self, row, values, wks):
-        """Given a list, input the new values into a row
+    def setRow(self, row, values):
+        """Given a list, input the new values into an already existing row (OVERWRITES THE ROW)
 
         Args:
             row (int): row where the new values will be stored
             values (list): new values for list
-            wks (str): specific worksheet
 
         Raises:
             AssertionError: raises an error if row does not exist
         """
+        try:
+            # first delete the row
+            self.deleteRow(row)
+            # then create a new row
+            self.createRow(row, values)
+        except:
+            print("setRow Error: Something went wrong")
 
-    def deleteRow(self, row, wks):
+    def createRow(self, row, values):
+        """Given a list, input the new values into a NEW row
+
+        Args:
+            row (int): new row will be indexed here
+            values (list): new values for list
+        """
+        try:
+            self.wks.insert_row(values, row)
+        except:
+            print("createRow Error: Not a valid row")
+
+
+    def deleteRow(self, row):
         """Deletes a row from a worksheet
 
         Args:
+            row (int): row to be deleted
+        """
+        try:
+            self.wks.delete_row(row)
+        except:
+            print("deleteRow Error: Not a valid row")
+
+    def clearRow(self, row):
+        """Clears a row of values
+
+        Args:
             row (int): row to be cleared
-            wks (str): specific worksheet
         """
+        try:
+            self.wks.delete_row(row)
+            self.wks.insert_row([], row)
+        except:
+            print("clearRow Error: Not a valid row")
     
-    def deleteCol(self, col, wks):
-        """Deletes a column from a worksheet
+    def deleteColumns(self, startCol, endCol=None):
+        """Deletes columns from a worksheet
 
         Args:
-            col (int): row to be cleared
-            wks (str): specific worksheet
+            startCol (int): first column to be deleted
+            endCol (int): last column to be deleted (inclusive)
         """
+        try:
+            if endCol == None: self.wks.delete_columns(startCol)
+            else: self.wks.delete_columns(startCol, endCol)
+        except:
+            print("deleteColumns Error: Not a valid range")
 
-    def clearWorksheet(self, wks):
+    def clearWorksheet(self):
         """Clears the cells in a worksheet
-
-        Args:
-            wks (str): specific worksheet
         """
+        self.wks.clear()
 
     def createWorksheet(self, wks):
-        """Creates a worksheet
+        """Creates a worksheet (100x25 worksheet)
 
         Args:
             wks (str): creates worksheet with title wks
         """
+        self.sh.add_worksheet(wks,100,25)
+
+    def getCoord(self, row, col):
+        """Generates a string of a cell's coordinate
+
+        Args:
+            row (int): row
+            col (int): col
+        """
+        col = chr(ord('A') + (col-1))
+        row = str(row)
+        return col + row
 
     
     
