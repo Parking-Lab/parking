@@ -22,16 +22,22 @@ class Student:
                    
         
         Actions:
-            uses GSheet class to define instance variables (name, type of car, etc.)
+            uses GSheet class to define instance variables (name, type of car, weights, etc.)
 
         '''
+
+        #the amount of days it has been since the student has been able to park on campus - adjust score based on this variable in generateScore()
+        self.spot_since = 0
         
         self.zone = ''
         
         pass
 
     def generateScore(self):
-        '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone'''
+        '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone
+
+        might use private methods to isolate that calculation of each category's weight'''
+
 
         '''To be written by Nambita and Aditya'''
 
