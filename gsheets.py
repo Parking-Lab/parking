@@ -1,6 +1,8 @@
 '''
 Alison
 
+LOL this is defunct
+
 Google Sheets Class (GSheet):
     Main Functionality:
         Get and set values on Google Sheet
@@ -21,7 +23,7 @@ Notes:
 import gspread
 
 class GSheet():
-    def __init__(self, sa, name, wks=None):
+    def __init__(self, sa, name:str, wks:str):
         """
         Creates a GSheet class
 
@@ -34,20 +36,18 @@ class GSheet():
         """
         self.sa = sa #service account
         self.sh = self.sa.open(name)
-        if (wks == None):
-            self.createWorksheet(wks)
-        else: self.wks = self.sh.worksheet(wks)
+        self.wks = self.sh.worksheet(wks)
         
 
-    def getCell(self, row, col):
+    def getCell(self, row:int, col:int) -> list:
         """Returns the value of a sheet 
 
         Args:
             row (int): cell's row
             col (int): cell's column
 
-        Raises:
-            AssertionError: raises an error if cell does not exist
+        Returns:
+            list: value of cell
         """
         try:
             coord = self.getCoord(row, col)
@@ -56,16 +56,13 @@ class GSheet():
             print("getCell Error: Not a valid cell")
             return []
 
-    def setCell(self, row, col, value):
+    def setCell(self, row:int, col:int, value:str):
         """Changes a cell's value given row, col, and new value
 
         Args:
             row (int): cell's row
             col (int): cell's column
             value (str): new value for cell
-
-        Raises:
-            AssertionError: raises an error if cell does not exist
         """
         try:
             self.wks.update_cell(row, col, value)
@@ -73,7 +70,7 @@ class GSheet():
             print("setCell Error: Not a valid cell")
 
     
-    def getRow(self, row):
+    def getRow(self, row:int):
         """Gets a row from the sheet and returns its values as a list
 
         Args:
@@ -92,7 +89,7 @@ class GSheet():
             return []
         
 
-    def setRow(self, row, values):
+    def setRow(self, row:int, values:list):
         """Given a list, input the new values into an already existing row (OVERWRITES THE ROW)
 
         Args:
@@ -110,7 +107,7 @@ class GSheet():
         except:
             print("setRow Error: Something went wrong")
 
-    def createRow(self, row, values):
+    def createRow(self, row:int, values:list):
         """Given a list, input the new values into a NEW row
 
         Args:
@@ -123,7 +120,7 @@ class GSheet():
             print("createRow Error: Not a valid row")
 
 
-    def deleteRow(self, row):
+    def deleteRow(self, row:int):
         """Deletes a row from a worksheet
 
         Args:
@@ -134,7 +131,7 @@ class GSheet():
         except:
             print("deleteRow Error: Not a valid row")
 
-    def clearRow(self, row):
+    def clearRow(self, row:int):
         """Clears a row of values
 
         Args:
@@ -146,7 +143,7 @@ class GSheet():
         except:
             print("clearRow Error: Not a valid row")
     
-    def deleteColumns(self, startCol, endCol=None):
+    def deleteColumns(self, startCol:int, endCol:int=None):
         """Deletes columns from a worksheet
 
         Args:
@@ -164,7 +161,7 @@ class GSheet():
         """
         self.wks.clear()
 
-    def createWorksheet(self, wks):
+    def createWorksheet(self, wks:str):
         """Creates a worksheet (100x25 worksheet)
 
         Args:
@@ -172,12 +169,15 @@ class GSheet():
         """
         self.sh.add_worksheet(wks,100,25)
 
-    def getCoord(self, row, col):
+    def getCoord(self, row:int, col:int) -> str:
         """Generates a string of a cell's coordinate
 
         Args:
             row (int): row
             col (int): col
+        
+        Returns:
+            str: the cell's coordinate
         """
         col = chr(ord('A') + (col-1))
         row = str(row)
