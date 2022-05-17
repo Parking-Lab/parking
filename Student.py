@@ -77,7 +77,8 @@ class Student:
         
         #WEIGHTS
         self.weight_sheet = weight_sheet
-        #has to retrieve the second row from the weights sheet
+        
+        #has to retrieve the second column from the weights sheet
         self.weight_column = self.weight_sheet.getColumn(2,'weight_sheet.smth')
 
         self.carpoolUnder_weight = self.weight_column[2]
@@ -90,13 +91,9 @@ class Student:
         
         self.commute_weight = self.weight_column[8]
         self.strike_weight = self.weight_column[9]
-        self.crash_weight = self.weight_column[10]
+        self.crash_weight = self.weight_column[10] 
         
-        
-        
-        
-
-        
+    
         
 
     def generateScore(self):
