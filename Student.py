@@ -12,6 +12,7 @@ Student Class
 This class holds information for the student object
 '''
 <<<<<<< HEAD
+<<<<<<< HEAD
 import json
 from Data import Data
 
@@ -28,6 +29,16 @@ class Student:
     gmaps = maps.Client(key = 'AIzaSyCG8Vw_ChoysnztSY4mM6-4picCZQrT1fQ')
     def __init__(self,row):
 >>>>>>> got l1 distances, in test file
+=======
+import json
+class Student:
+
+    #! this code runs at *definition*, so basically when this file is imported.
+    with open('distances.json', 'r') as f:
+        DISTANCES = json.load(f)
+    
+    def __init__(self, row):
+>>>>>>> saved distances as json, and implemented  for student
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
         Args:
@@ -131,7 +142,18 @@ class Student:
         return Student.DISTANCES[zipcode]*1.5
 
     @staticmethod
-    def distScore(zipcode):
-        Student.gmaps.directions()
+    def distScore(zipcode: int) -> float:
+        """gets the score for a given zip code.
+
+        Args:
+            zipcode (int): the zip code to get the score for
+
+        Raises:
+            KeyError: if the zipcode is invalid
+            
+        Returns:
+            float: the resulting score, based on the l1 distance to 94010 (school)
+        """
+        return Student.DISTANCES[zipcode]*1.5
 
 
