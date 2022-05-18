@@ -11,6 +11,7 @@ Student Class
 
 This class holds information for the student object
 '''
+<<<<<<< HEAD
 import json
 from Data import Data
 
@@ -21,6 +22,12 @@ class Student:
         DISTANCES = json.load(f)
     
     def __init__(self,row,day,form_sheet,weight_sheet):
+=======
+import googlemaps as maps
+class Student:
+    gmaps = maps.Client(key = 'AIzaSyCG8Vw_ChoysnztSY4mM6-4picCZQrT1fQ')
+    def __init__(self,row):
+>>>>>>> got l1 distances, in test file
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
         Args:
@@ -122,5 +129,9 @@ class Student:
             float: the resulting score, based on the l1 distance to 94010 (school)
         """
         return Student.DISTANCES[zipcode]*1.5
+
+    @staticmethod
+    def distScore(zipcode):
+        Student.gmaps.directions()
 
 
