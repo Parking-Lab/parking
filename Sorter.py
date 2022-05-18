@@ -3,6 +3,7 @@ Sorter Class
 
 This class holds students, and sorts them based on rank.
 '''
+import bisect
 class Sorter:
     def __init__(self, students: 'list[Student]') -> 'None':
         """constructor for Sorter object. sorts students upon intialization.
@@ -11,7 +12,7 @@ class Sorter:
             students (list[students]): a list of all students to be sorted
         """
         self.students = students
-        self.students.sort(reverse = True, key = lambda x: x.generateScore())
+        self.students.sort(key = lambda x: x.generateScore())
 
     def add(self, *student: 'Student') -> 'None':
         """Adds `student` to the list of students, and places them in the correct order
@@ -19,7 +20,8 @@ class Sorter:
         Args:
             student (Student, multiple accepted): the student(s) to add.
         """
-        pass
+        for s in student:
+            self.students.insert(bisect.bisect(self.students, s.generateScore(), key = lambda x: x.generateScore()), s)
 
     def update(self, newStudents: 'dict[Student, Student]') -> 'None':
         """updates the current students matching the keys in `newStudents` with their corrosponding values.
