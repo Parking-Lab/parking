@@ -12,7 +12,8 @@ class Sorter:
         Args:
             students (list[students]): a list of all students to be sorted
         """
-        pass
+        self.students = students
+        self.students.sort(reverse = True, key = lambda x: x.generateScore())
 
     def add(self, *student: 'Student') -> 'None':
         """Adds `student` to the list of students, and places them in the correct order
