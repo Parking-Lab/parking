@@ -25,9 +25,11 @@ import gspread
 
 def main():
     sa = gspread.service_account()
-    # sh = sa.open("CSUS Parking Data")
+    sh = sa.open("CSUS Parking Results")
 
-    # wks = sh.worksheet("BaseInfo")
+    wks = sh.worksheet("testing")
+    values = [['hi', 'hi', 'hi', 'hi'], ['hello','hello','hello']]
+    wks.insert_rows(values, 2)
 
     # print("rows:", wks.row_count)
     # print('5/17/2022 10:54:13' > '5/17/2022 10:33:29')
