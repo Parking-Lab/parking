@@ -164,5 +164,7 @@ def main():
     data = Data()
     # print(data.getKey())
     # print(data.getFormattedInfo())
+    # values = [['hi', 'hi', 'hi', 'hi'], ['hello','hello','hello']]
+    # data.loadResults(values)
 
 if __name__ == '__main__': main()
