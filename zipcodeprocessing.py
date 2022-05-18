@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 import numpy as np
 
@@ -23,7 +24,7 @@ print(np.array(list(map(np.sum, dist_abs))))
 dists = dict(
             zip
             (
-                df['ZIP'].to_numpy(), 
+                df['ZIP'].to_list(), 
 
                 np.array
                 (
@@ -40,3 +41,6 @@ dists = dict(
         )
 
 print(dists)
+
+with open('distances.json', 'w') as f:
+    json.dump(dists, f)
