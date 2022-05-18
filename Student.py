@@ -11,6 +11,7 @@ Student Class
 
 This class holds information for the student object
 '''
+
 import json
 from Data import Data
 
@@ -20,6 +21,7 @@ class Student:
     with open('distances.json', 'r') as f:
         DISTANCES = json.load(f)
     
+
     def __init__(self,row,day,form_sheet,weight_sheet):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
