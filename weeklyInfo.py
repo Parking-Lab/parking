@@ -73,7 +73,7 @@ class WeeklyInfo():
         """Gets user's base info given name (accesses dictionary)
 
         Args:
-            email (email): _description_
+            email (email): student's email
 
         Returns:
             list: all info for queried user (columns C-H)
@@ -102,7 +102,7 @@ class WeeklyInfo():
         """Returns if student's base info is found
 
         Args:
-            email (str): _description_
+            email (str): student's email
 
         Returns:
             bool: true if found, false if not

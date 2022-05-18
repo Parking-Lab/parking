@@ -19,12 +19,14 @@ NOTE from Alison:
 from baseInfo import BaseInfo
 from weeklyInfo import WeeklyInfo 
 from resultsInfo import ResultsInfo
+from strikesInfo import StrikesInfo
 
 class Data:
     def __init__(self):
         self.baseInfo = BaseInfo() # create the object, automatically gets info and formats it
         self.weeklyInfo = WeeklyInfo() # create the object, automatically gets info and formats it
         self.resultsInfo = ResultsInfo() # create the object...
+        self.strikesInfo = StrikesInfo() # creates the object
         self.key = [
                         'Name',
                         'Car Size',
@@ -43,7 +45,8 @@ class Data:
                         'Carpool Seniors',
                         'First Period Free',
                         'Last Period Free',
-                        'Parallel Parking'
+                        'Parallel Parking',
+                        'Strike History'
                     ]
         self.finalData = []
         self._formatAllInfo()
@@ -128,9 +131,12 @@ class Data:
             if self.baseInfo.getLastPeriod(name): formattedRow.append(1)
             else: formattedRow.append(0)
 
-            # 'Parallel Parking'
+            # 'Parallel Parking',
             if self.baseInfo.getPara(name): formattedRow.append(1)
             else: formattedRow.append(0)
+
+            # 'Strike History'
+            formattedRow.append(self.strikesInfo.userStrikeHistory(name))
 
             self.finalData.append(formattedRow)
 
