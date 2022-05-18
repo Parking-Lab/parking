@@ -1,9 +1,10 @@
 '''
-Alison
+Author: Alison
 
 Weekly Info Class (WeeklyInfo):
-    Main Functionality:
-        Organizes and outputs information from the weekly info Google Form (weekly form)
+    Description: accesses information pertaining to student's weekly info from Google Sheets
+    Main Functionality: Organizes and outputs information from the weekly info Google Form (weekly form)
+    NOTE: Do not use this class directly. It is implemented in the Data class
 '''
 
 import gspread

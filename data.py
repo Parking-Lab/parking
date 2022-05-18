@@ -1,12 +1,13 @@
 '''
-Alison
+Author: Alison
 
-Data class to be used by rest of program
+Data Class (Data):
+    Description: Data class to be used by rest of parking program. Few methods for all needs
+    Main functionality: Brings together multiple sheets and provides an interface to handle all of them easily
 
 Encapsulation goes brr
 
-
-NOTE: 
+NOTE from Alison: 
 - other than running the program, there are a few steps still needed by the person managing this program (so 12th grade presidents? idk I forgot who would be running this)
 - on the weekly form, we may want to indicate for what week the weekly form is for (like dates or smth)
 - after the program finishes, the WEEKLY form needs all of its responses cleared (I can’t seem to find a way to do this programmatically)

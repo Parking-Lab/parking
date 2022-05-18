@@ -1,22 +1,30 @@
-'''Hi it's alison ahhh'''
+'''
+Author: Alison
+'''
 
-''' steps: 
-after downlaoding json key for service account, the json file should be in downloads. move it to .config.
+''' 
+Installation steps: 
+1. make sure parking project is cloned to desktop:
 
-make sure project is cloned to desktop, idk
+cd
+cd desktop
+git clone https://github.com/Parking-Lab/parking.git
 
-download parking_service_account_test.json from uh... just get the file from me lol. make sure it's in the downloads folder
+2. download parking_service_account_test.json from Alison. Make sure it's located in the downloads folder
+3. type the following commands in command line:
 
 cd
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 pip install gspread
 mkdir ~/.config/gspread
 cp Downloads/parking_service_account.json ~/.config/gspread/service_account.json
+'''
 
+'''
+Other things that Alison needs to do D:
 TODO:
 make this easier by creating an installation packet-like thing...
 create an executable instead? One for installation, one for running the program.. if this is possible ;-;
-
 '''
 
 # just me testing stuff out :D
@@ -24,12 +32,13 @@ create an executable instead? One for installation, one for running the program.
 import gspread
 
 def main():
-    sa = gspread.service_account()
-    sh = sa.open("CSUS Parking Results")
+    print("------start of tests------")
+    # sa = gspread.service_account()
+    # sh = sa.open("CSUS Parking Results")
 
-    wks = sh.worksheet("testing")
-    values = [['hi', 'hi', 'hi', 'hi'], ['hello','hello','hello']]
-    wks.insert_rows(values, 2)
+    # wks = sh.worksheet("testing")
+    # values = [['hi', 'hi', 'hi', 'hi'], ['hello','hello','hello']]
+    # wks.insert_rows(values, 2)
 
     # print("rows:", wks.row_count)
     # print('5/17/2022 10:54:13' > '5/17/2022 10:33:29')

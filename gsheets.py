@@ -1,7 +1,7 @@
 '''
-Alison
+Author: Alison
 
-LOL this is defunct
+NOTE: THIS IS NO LONGER USED. Only serves as documentation for/fast access to some logic stuff I worked through, early on
 
 Google Sheets Class (GSheet):
     Main Functionality:
@@ -22,12 +22,6 @@ Notes:
 
 import gspread
 
-class GSheet():
-    def __init__(self):
-        print("this is no longer used lol")
-
-
-'''
 class GSheet():
     def __init__(self, sa, name:str, wks:str):
         """
@@ -189,7 +183,3 @@ class GSheet():
         row = str(row)
         return col + row 
 
-'''
-        
-
-    
