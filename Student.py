@@ -11,8 +11,9 @@ Student Class
 
 This class holds information for the student object
 '''
-
+import googlemaps as maps
 class Student:
+    gmaps = maps.Client(key = 'AIzaSyCG8Vw_ChoysnztSY4mM6-4picCZQrT1fQ')
     def __init__(self,row):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
@@ -35,5 +36,8 @@ class Student:
 
         '''To be written by Nambita and Aditya'''
 
+    @staticmethod
+    def distScore(zipcode):
+        Student.gmaps.directions()
 
-    
+
