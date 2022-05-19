@@ -11,17 +11,16 @@ Student Class
 
 This class holds information for the student object
 '''
-
-import json
 from data import Data
+import json
 
-class Student:
+class Student: 
 
     #! this code runs at *definition*, so basically when this file is imported.
     with open('distances.json', 'r') as f:
         DISTANCES = json.load(f)
     
-    def __init__(self,row,day,form_sheet,weight_sheet):
+    def __init__(self,row,data):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
         Args:
@@ -44,12 +43,11 @@ class Student:
 
 
         #day of the week that this program is being run for
-        self.day = day
             
-        self.data = Data()
+        self.data = data
         self.data = self.data.getFormattedInfo()
 
-        print(self.data)
+        
         
         self.row = self.data[row]
 
@@ -82,6 +80,12 @@ class Student:
         #boolean
         self.parallel = self.row[17]
 
+        self.strikes = self.row[18]
+
+        
+
+        
+
         #the amount of days it has been since the student has been able to park on campus - adjust score based on this variable in generateScore()
         self.spot_since = 0
         
@@ -103,16 +107,40 @@ class Student:
 ##        
 ##        self.commute_weight = self.weight_column[8]
 ##        self.strike_weight = self.weight_column[9]
-##        self.crash_weight = self.weight_column[10] 
-##        
+##        self.crash_weight = self.weight_column[10]
+##
+
+    def getName(self):
+        return self.name
+
+    def getCanParallelPark(self):
+        if self.parallel == 1:
+            return True
+        return False
+
+    def hasSmallCar(self):
+        return not self.car
+        
+
+    def __hash__(self) -> int:
+        """hash implementation for Student. Don't call, use `hash(Student)`. Based on the name.
+        Returns:
+            int: the hash for this Student
+        """
+        return hash(self.name)
     
-    def generateScore(self):
+    def generateScore(self,day):
         '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone
 
         might use private methods to isolate that calculation of each category's weight'''
 
 
         '''To be written by Nambita and Aditya'''
+
+        self.day = day
+        
+
+        #print(self.name)
 
         if self.day == 'Monday': 
             crit = self.mon_crit
@@ -124,18 +152,37 @@ class Student:
             crit = self.thur_crit
         if self.day == 'Friday':
             crit = self.fri_crit
-            
-        #listing = [self.fpfree,self.lpfree,self.sports,crit,self.strike, self.crash]
-            
-        listing = [self.fpFree,self.lpFree,self.sports_mon,self.sports_tue,self.sports_wed,self.sports_thu,self.sports_fri]
+
+        if self.day == 'Monday': 
+            sport = self.sports_mon
+        if self.day == 'Tuesday':
+            sport = self.sports_tue
+        if self.day == 'Wednesday':
+            sport = self.sports_wed
+        if self.day == 'Thursday':
+            sport = self.sports_thu
+        if self.day == 'Friday':
+            sport = self.sports_fri        
+
+
+
+        listing = [self.fpFree,self.lpFree,crit,sport]
+
         
         #convertResponse = convertResponses(listing)
-        weighting = [16,8,10, 40,-40, -40] 
+        weighting = [16,8,10, 40,-40, -40]
+
+        #listing = [self.fpfree,self.lpfree,self.sports,crit,self.strike, self.crash]
+            
+        
+        #convertResponse = convertResponses(listing)
         scorelist = []
-        print(listing)
-        for i in listing:
+        
+        for i in range(len(listing)):
             num = listing[i] * weighting[i]
             scorelist.append(num)
+
+
         score = sum(scorelist)
                 
         
@@ -143,13 +190,17 @@ class Student:
                 score = score + (self.carpoolMult*1.25)
         if self.carpoolSeniors == 1:
                 score = score + (self.carpoolSeniors*3)
+
+        #print('name')
+        #print(self.name)
                 
-        print(score)
+
         #scoring = distance(score, self.commute)
         #print(scoring)
         #scorewstrikes = self.strike(score, self.strike, self.crash)
         scorewstrikes = score
-        print(scorewstrikes)
+
+        return scorewstrikes
 
     def strike(self,score, strike, crash):
         strike = strike * -20
@@ -157,7 +208,16 @@ class Student:
         scorewstrikes = score + strike + crash
         return scorewstrikes
 
-   
+    def getData(self):
+        '''returns student score as a list'''
+        
+        score1 = self.generateScore('Monday')
+        score2 = self.generateScore('Tuesday')
+        score3 = self.generateScore('Wednesday')
+        score4 = self.generateScore('Thursday')
+        score5 = self.generateScore('Friday')       
+
+        return [score1,score2,score3,score4,score5]
 
     @staticmethod
     def distScore(zipcode: int) -> float:
@@ -173,10 +233,24 @@ class Student:
             float: the resulting score, based on the l1 distance to 94010 (school)
         """
         return Student.DISTANCES[zipcode]*1.5
-        
+
 def main():
-    student = Student(1,'Monday',2,2)
-    student.generateScore()
+    data = Data()
+    student = Student(0,data)
+    student_score = student.getData()
+    print(student.name)
+    print(student_score)
+
+    print(len(student.data))
+
+    print(student.hasSmallCar())
+
+    for i in range(len(student.data)-1):
+        student2 = Student(i+1,data)
+        student2_score = student2.getData()
+        print(student2.name)
+        print(student2_score)
+        
     
+
 if __name__ == '__main__': main()
-    
