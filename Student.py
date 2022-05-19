@@ -11,28 +11,9 @@ Student Class
 
 This class holds information for the student object
 '''
-<<<<<<< HEAD
 from data import Data
-=======
-<<<<<<< HEAD
-from Data import Data
-=======
->>>>>>> 5b965a51230bc5d47fe0e88d9027175097f77f66
-
-import json
-from Data import Data
->>>>>>> 18dc99f3ad85a08488729a900866677b8a86b6f9
 
 class Student:
-
-    #! this code runs at *definition*, so basically when this file is imported.
-    with open('distances.json', 'r') as f:
-        DISTANCES = json.load(f)
-    
-<<<<<<< HEAD
-=======
-
->>>>>>> 5b965a51230bc5d47fe0e88d9027175097f77f66
     def __init__(self,row,day,form_sheet,weight_sheet):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
@@ -127,43 +108,58 @@ class Student:
 
 
         '''To be written by Nambita and Aditya'''
-        pass
 
-<<<<<<< HEAD
+        print(self.name)
+        
+        if self.day == 'Monday': 
+            crit = self.mon_crit
+        if self.day == 'Tuesday':
+            crit = self.tue_crit
+        if self.day == 'Wednesday':
+            crit = self.wed_crit
+        if self.day == 'Thursday':
+            crit = self.thur_crit
+        if self.day == 'Friday':
+            crit = self.fri_crit
+            
+        listing = [self.fpFree,self.lpFree,self.sports_mon,self.sports_tue,self.sports_wed,self.sports_thu,self.sports_fri]
+        
+        #convertResponse = convertResponses(listing)
+        weighting = [16,8,10, 40,-40, -40]
+        scorelist = []
+        print(listing)
+        for i in listing:
+            num = listing[i] * weighting[i]
+            scorelist.append(num)
+        score = sum(scorelist)
+                
+        
+        if self.carpoolMult == 1:
+                score = score + (self.carpoolMult*1.25)
+        if self.carpoolSeniors == 1:
+                score = score + (self.carpoolSeniors*3)
+        print('name')
+        print(self.name)
+        #scoring = distance(score, self.commute)
+        #print(scoring)
+        #scorewstrikes = self.strike(score, self.strike, self.crash)
+        scorewstrikes = score
+        print(scorewstrikes)
+
+    def strike(self,score, strike, crash):
+        strike = strike * -20
+        crash = crash * -500
+        scorewstrikes = score + strike + crash
+        return scorewstrikes
+
 def main():
-    student = Student(1,2,2,2)
+    student = Student(0,'Monday',2,2)
+    student.generateScore()
+
+    student2 = Student(1,'Monday',2,2)
+    student2.generateScore()
+
+    student3 = Student(2,'Monday',2,2)
+    student3.generateScore()
     
 if __name__ == '__main__': main()
-=======
-    @staticmethod
-    def distScore(zipcode: int) -> float:
-        """gets the score for a given zip code.
-
-        Args:
-            zipcode (int): the zip code to get the score for
-
-        Raises:
-            KeyError: if the zipcode is invalid
-            
-        Returns:
-            float: the resulting score, based on the l1 distance to 94010 (school)
-        """
-        return Student.DISTANCES[zipcode]*1.5
-
-    @staticmethod
-    def distScore(zipcode: int) -> float:
-        """gets the score for a given zip code.
-
-        Args:
-            zipcode (int): the zip code to get the score for
-
-        Raises:
-            KeyError: if the zipcode is invalid
-            
-        Returns:
-            float: the resulting score, based on the l1 distance to 94010 (school)
-        """
-        return Student.DISTANCES[zipcode]*1.5
-
-
->>>>>>> 18dc99f3ad85a08488729a900866677b8a86b6f9
