@@ -11,7 +11,7 @@ Student Class
 
 This class holds information for the student object
 '''
-from Data import Data
+from data import Data
 
 class Student:
     def __init__(self,row,day,form_sheet,weight_sheet):
@@ -40,9 +40,13 @@ class Student:
         self.day = day
             
         self.data = Data()
-        self.data.getFormattedInfo()
+        self.data = self.data.getFormattedInfo()
+
+        print(self.data)
         
         self.row = self.data[row]
+
+        #print(self.row)
 
         self.name = self.row[0]
         self.car = self.row[1]
@@ -55,41 +59,45 @@ class Student:
         self.thur_crit = self.row[6]
         self.fri_crit = self.row[7]
         
-        self.sports = self.row[8]
+        self.sports_mon = self.row[8]
+        self.sports_tue = self.row[9]
+        self.sports_wed = self.row[10]
+        self.sports_thu = self.row[11]
+        self.sports_fri = self.row[12]
         
-        self.carpoolUnder = self.row[9]
-        self.carpoolSenior = self.row[10]
+        self.carpoolMult = self.row[13]
+        self.carpoolSeniors = self.row[14]
 
         #first period and last period free
-        self.fpFree = self.row[11]
-        self.lpFree = self.row[12]
+        self.fpFree = self.row[15]
+        self.lpFree = self.row[16]
 
         #boolean
-        self.parallel = self.row[13]
+        self.parallel = self.row[17]
 
         #the amount of days it has been since the student has been able to park on campus - adjust score based on this variable in generateScore()
         self.spot_since = 0
         
         self.zone = ''
         
-        #WEIGHTS
-        self.weight_sheet = weight_sheet
-        
-        #has to retrieve the second column from the weights sheet
-        self.weight_column = self.weight_sheet.getColumn(2,'weight_sheet.smth')
-
-        self.carpoolUnder_weight = self.weight_column[2]
-        self.carpoolSenior_weight = self.weight_column[3]
-        self.fpfree_weight = self.weight_column[4]
-        self.lpfree_weight = self.weight_column[5]
-
-        self.sports_weight = self.weight_column[6]
-        self.crit_weight = self.weight_column[7]
-        
-        self.commute_weight = self.weight_column[8]
-        self.strike_weight = self.weight_column[9]
-        self.crash_weight = self.weight_column[10] 
-        
+##        #WEIGHTS
+##        self.weight_sheet = weight_sheet
+##        
+##        #has to retrieve the second column from the weights sheet
+##        self.weight_column = self.weight_sheet.getColumn(2,'weight_sheet.smth')
+##
+##        self.carpoolUnder_weight = self.weight_column[2]
+##        self.carpoolSenior_weight = self.weight_column[3]
+##        self.fpfree_weight = self.weight_column[4]
+##        self.lpfree_weight = self.weight_column[5]
+##
+##        self.sports_weight = self.weight_column[6]
+##        self.crit_weight = self.weight_column[7]
+##        
+##        self.commute_weight = self.weight_column[8]
+##        self.strike_weight = self.weight_column[9]
+##        self.crash_weight = self.weight_column[10] 
+##        
     
         
 
@@ -103,5 +111,7 @@ class Student:
 
         pass
 
-
+def main():
+    student = Student(1,2,2,2)
     
+if __name__ == '__main__': main()
