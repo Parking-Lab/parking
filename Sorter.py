@@ -32,26 +32,32 @@ class Sorter:
         Args:
             newStudents (dict[Student, Student]): dict of updates, in the form {current: new, current: new, ...}
         """
-        pass
+        for cur, new in newStudents:
+            self.students[self.students.index(cur)] = new
+        self.students.sort(key = lambda x: x.generateScore())
 
-    def __getitem__(self, day: int, index: 'int|str|Student' = 0) -> 'Student|int':
+    def __getitem__(self, day: int, idx: 'int|str|Student' = 0) -> 'Student|int':
         """gets an item, using subscript notation like a list. Takes an int (rank), str (student's name), or Student (actual equivalent student object).
 
         Args:
             day (int): int in [0, 4] describing the day of the week requested.
-            index (int|str|Student, optional): if int, returns student in that rank (0 is best, can be negative, return Student). If str, returns rank of student with that name (int). If Student, returns rank of that Student (int). Defaults to -1.
+            idx (int|str|Student, optional): if int, returns student in that rank (0 is best, can be negative, return Student). If str, returns rank of student with that name (int). If Student, returns rank of that Student (int). Defaults to -1.
 
         Raises:
-            KeyError: if the str name or Student passed does not exist in the Sorter
+            ValueError: if the str name or Student passed does not exist in the Sorter
             IndexError: if the int rank passed is out of range (ie not that many students exist) or if you entered a day that doesn't exist
             TypeError: if you try to get the student at rank 2.5
 
         Returns:
             Student|int : the rank or student requested
         """
-
-        return
-    
+        if isinstance(idx, int):
+            return self.students[-1-idx][day]
+        if isinstance(idx, str):
+            return self.students[list(map(lambda x: x.name, self.students)).index(idx)][day]
+        if isinstance(idx, Student):
+            return self.students[self.students.index(idx)][day]
+        raise TypeError(f'Expected idx of type int|str|Student but received {type(idx)}.')
     def pop(self, day: int) -> 'tuple[Student, int]':
         """returns (and deletes) top ranked student, like pop function in a standard queue.
 
