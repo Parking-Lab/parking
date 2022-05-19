@@ -174,9 +174,16 @@ class Student:
         """
         return Student.DISTANCES[zipcode]*1.5
         
+    
+
 def main():
-    student = Student(1,'Monday',2,2)
+    student = Student(0,'Monday',2,2)
     student.generateScore()
+
+    student2 = Student(1,'Monday',2,2)
+    student2.generateScore()
+
+    student3 = Student(2,'Monday',2,2)
+    student3.generateScore()
     
 if __name__ == '__main__': main()
-    
