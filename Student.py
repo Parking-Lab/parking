@@ -106,16 +106,58 @@ class Student:
 ##        self.crash_weight = self.weight_column[10] 
 ##        
     
-        
-
-    def generateScore(self):
+     def generateScore(self):
         '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone
 
         might use private methods to isolate that calculation of each category's weight'''
 
 
         '''To be written by Nambita and Aditya'''
-        pass
+
+        if self.day == 'Monday': 
+            crit = self.mon_crit
+        if self.day == 'Tuesday':
+            crit = self.tue_crit
+        if self.day == 'Wednesday':
+            crit = self.wed_crit
+        if self.day == 'Thursday':
+            crit = self.thur_crit
+        if self.day == 'Friday':
+            crit = self.fri_crit
+            
+        #listing = [self.fpfree,self.lpfree,self.sports,crit,self.strike, self.crash]
+            
+        listing = [self.fpFree,self.lpFree,self.sports_mon,self.sports_tue,self.sports_wed,self.sports_thu,self.sports_fri]
+        
+        #convertResponse = convertResponses(listing)
+        weighting = [16,8,10, 40,-40, -40] 
+        scorelist = []
+        print(listing)
+        for i in listing:
+            num = listing[i] * weighting[i]
+            scorelist.append(num)
+        score = sum(scorelist)
+                
+        
+        if self.carpoolMult == 1:
+                score = score + (self.carpoolMult*1.25)
+        if self.carpoolSeniors == 1:
+                score = score + (self.carpoolSeniors*3)
+                
+        print(score)
+        #scoring = distance(score, self.commute)
+        #print(scoring)
+        #scorewstrikes = self.strike(score, self.strike, self.crash)
+        scorewstrikes = score
+        print(scorewstrikes)
+
+    def strike(self,score, strike, crash):
+        strike = strike * -20
+        crash = crash * -500
+        scorewstrikes = score + strike + crash
+        return scorewstrikes
+
+   
 
     @staticmethod
     def distScore(zipcode: int) -> float:
@@ -132,9 +174,9 @@ class Student:
         """
         return Student.DISTANCES[zipcode]*1.5
         
-def main():
-    student = Student(1,2,2,2)
+ def main():
+        student = Student(1,'Monday',2,2)
+        student.generateScore()
     
-if __name__ == '__main__': main()
-
-
+    if __name__ == '__main__': main()
+    
