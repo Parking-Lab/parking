@@ -21,6 +21,8 @@ mkdir ~/.config/gspread
 cp Downloads/parking_service_account.json ~/.config/gspread/service_account.json
 
 4. if the above doesn't work, try this:
+
+cd
 pip install --upgrade pip
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 pip install gspread
