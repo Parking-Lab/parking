@@ -106,7 +106,7 @@ class Student:
 ##        self.crash_weight = self.weight_column[10] 
 ##        
     
-     def generateScore(self):
+    def generateScore(self):
         '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone
 
         might use private methods to isolate that calculation of each category's weight'''
@@ -174,9 +174,9 @@ class Student:
         """
         return Student.DISTANCES[zipcode]*1.5
         
- def main():
-        student = Student(1,'Monday',2,2)
-        student.generateScore()
+def main():
+    student = Student(1,'Monday',2,2)
+    student.generateScore()
     
-    if __name__ == '__main__': main()
+if __name__ == '__main__': main()
     
