@@ -13,7 +13,7 @@ This class holds information for the student object
 '''
 
 import json
-from Data import Data
+from data import Data
 
 class Student:
 
