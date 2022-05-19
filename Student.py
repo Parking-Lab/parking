@@ -11,9 +11,28 @@ Student Class
 
 This class holds information for the student object
 '''
+<<<<<<< HEAD
 from data import Data
+=======
+<<<<<<< HEAD
+from Data import Data
+=======
+>>>>>>> 5b965a51230bc5d47fe0e88d9027175097f77f66
+
+import json
+from Data import Data
+>>>>>>> 18dc99f3ad85a08488729a900866677b8a86b6f9
 
 class Student:
+
+    #! this code runs at *definition*, so basically when this file is imported.
+    with open('distances.json', 'r') as f:
+        DISTANCES = json.load(f)
+    
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5b965a51230bc5d47fe0e88d9027175097f77f66
     def __init__(self,row,day,form_sheet,weight_sheet):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
@@ -108,10 +127,43 @@ class Student:
 
 
         '''To be written by Nambita and Aditya'''
-
         pass
 
+<<<<<<< HEAD
 def main():
     student = Student(1,2,2,2)
     
 if __name__ == '__main__': main()
+=======
+    @staticmethod
+    def distScore(zipcode: int) -> float:
+        """gets the score for a given zip code.
+
+        Args:
+            zipcode (int): the zip code to get the score for
+
+        Raises:
+            KeyError: if the zipcode is invalid
+            
+        Returns:
+            float: the resulting score, based on the l1 distance to 94010 (school)
+        """
+        return Student.DISTANCES[zipcode]*1.5
+
+    @staticmethod
+    def distScore(zipcode: int) -> float:
+        """gets the score for a given zip code.
+
+        Args:
+            zipcode (int): the zip code to get the score for
+
+        Raises:
+            KeyError: if the zipcode is invalid
+            
+        Returns:
+            float: the resulting score, based on the l1 distance to 94010 (school)
+        """
+        return Student.DISTANCES[zipcode]*1.5
+
+
+>>>>>>> 18dc99f3ad85a08488729a900866677b8a86b6f9
