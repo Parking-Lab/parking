@@ -12,8 +12,14 @@ Student Class
 This class holds information for the student object
 '''
 from data import Data
+import json
 
 class Student:
+
+    #! this code runs at *definition*, so basically when this file is imported.
+    with open('distances.json', 'r') as f:
+        DISTANCES = json.load(f)
+    
     def __init__(self,row,day,form_sheet,weight_sheet):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
@@ -99,8 +105,6 @@ class Student:
 ##        self.crash_weight = self.weight_column[10] 
 ##        
     
-        
-
     def generateScore(self):
         '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone
 
@@ -110,7 +114,7 @@ class Student:
         '''To be written by Nambita and Aditya'''
 
         print(self.name)
-        
+
         if self.day == 'Monday': 
             crit = self.mon_crit
         if self.day == 'Tuesday':
@@ -121,11 +125,16 @@ class Student:
             crit = self.thur_crit
         if self.day == 'Friday':
             crit = self.fri_crit
-            
+
         listing = [self.fpFree,self.lpFree,self.sports_mon,self.sports_tue,self.sports_wed,self.sports_thu,self.sports_fri]
         
         #convertResponse = convertResponses(listing)
         weighting = [16,8,10, 40,-40, -40]
+
+        #listing = [self.fpfree,self.lpfree,self.sports,crit,self.strike, self.crash]
+            
+        
+        #convertResponse = convertResponses(listing)
         scorelist = []
         print(listing)
         for i in listing:
@@ -140,6 +149,8 @@ class Student:
                 score = score + (self.carpoolSeniors*3)
         print('name')
         print(self.name)
+                
+        print(score)
         #scoring = distance(score, self.commute)
         #print(scoring)
         #scorewstrikes = self.strike(score, self.strike, self.crash)
@@ -152,6 +163,25 @@ class Student:
         scorewstrikes = score + strike + crash
         return scorewstrikes
 
+
+
+   
+
+    @staticmethod
+    def distScore(zipcode: int) -> float:
+        """gets the score for a given zip code.
+
+        Args:
+            zipcode (int): the zip code to get the score for
+
+        Raises:
+            KeyError: if the zipcode is invalid
+            
+        Returns:
+            float: the resulting score, based on the l1 distance to 94010 (school)
+        """
+        return Student.DISTANCES[zipcode]*1.5
+
 def main():
     student = Student(0,'Monday',2,2)
     student.generateScore()
@@ -162,4 +192,7 @@ def main():
     student3 = Student(2,'Monday',2,2)
     student3.generateScore()
     
+    
 if __name__ == '__main__': main()
+    
+
