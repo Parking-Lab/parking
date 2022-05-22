@@ -49,18 +49,24 @@ class WeeklyInfo():
         """
         usersDict = {} # key : value where value is [time, row]
         row = 0
+        num = 0
         while row < len(self.allInfo):
             user = self.allInfo[row][1]
             time = self.allInfo[row][0]
             if user in usersDict: # previously seen 
+                # print(user)
                 if time > usersDict[user][0]: # current time is more than previous row (we want current time!)
                     self.allInfo.pop(usersDict[user][1]) # pop that row
+                    # print("row popped",usersDict[user][1], " cur row:", row) # the row
                     usersDict[user] = [time, row]
                 else: 
                     self.allInfo.pop(row) # pop current row because time is more than previous row
-                row -= 1 # move back one
-            else: usersDict[user] = [time, row] # first time seen, keep on going
-            row += 1
+
+                num+=1
+            else:
+                usersDict[user] = [time, row] # first time seen, keep on going
+                row += 1
+        # print("num popped:", num)
 
     def generateDict(self):
         """Generates the dictionary

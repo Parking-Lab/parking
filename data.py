@@ -165,6 +165,11 @@ class Data:
         """
         self.resultsInfo.updateSheet(newResults) # that's it!
 
+    def reset(self):
+        """Resets sheets at the end of calculations (notably, clears the weekly sheet of data for the new week)
+        """
+        self.weeklyInfo.clearSheet(True)
+
         
 def main():
     data = Data()
@@ -172,5 +177,6 @@ def main():
     # print(data.getFormattedInfo())
     # values = [['hi', 'hi', 'hi', 'hi'], ['hello','hello','hello']]
     # data.loadResults(values)
+    # data.reset()
 
 if __name__ == '__main__': main()
