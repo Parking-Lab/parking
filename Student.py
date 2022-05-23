@@ -20,7 +20,7 @@ class Student:
     with open('distances.json', 'r') as f:
         DISTANCES = json.load(f)
     
-    def __init__(self,row,day,form_sheet,weight_sheet):
+    def __init__(self,row,form_sheet,weight_sheet):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
         Args:
@@ -43,7 +43,6 @@ class Student:
 
 
         #day of the week that this program is being run for
-        self.day = day
             
         self.data = Data()
         self.data = self.data.getFormattedInfo()
@@ -106,16 +105,21 @@ class Student:
 ##        
 ##        self.commute_weight = self.weight_column[8]
 ##        self.strike_weight = self.weight_column[9]
-##        self.crash_weight = self.weight_column[10] 
-##        
+##        self.crash_weight = self.weight_column[10]
+##
+
+        
+        
     
-    def generateScore(self):
+    def generateScore(self,day):
         '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone
 
         might use private methods to isolate that calculation of each category's weight'''
 
 
         '''To be written by Nambita and Aditya'''
+
+        self.day = day
 
         print(self.name)
 
@@ -140,7 +144,7 @@ class Student:
         
         #convertResponse = convertResponses(listing)
         scorelist = []
-        print(listing)
+        #print(listing)
         for i in listing:
             num = listing[i] * weighting[i]
             scorelist.append(num)
@@ -154,18 +158,32 @@ class Student:
         print('name')
         print(self.name)
                 
-        print(score)
+
         #scoring = distance(score, self.commute)
         #print(scoring)
         #scorewstrikes = self.strike(score, self.strike, self.crash)
         scorewstrikes = score
-        print(scorewstrikes)
+
+        return scorewstrikes
 
     def strike(self,score, strike, crash):
         strike = strike * -20
         crash = crash * -500
         scorewstrikes = score + strike + crash
         return scorewstrikes
+
+    def getData(self):
+        '''returns student score as a list'''
+        
+        score1 = self.generateScore('Monday')
+        score2 = self.generateScore('Tuesday')
+        score3 = self.generateScore('Wednesday')
+        score4 = self.generateScore('Thursday')
+        score5 = self.generateScore('Friday')
+
+        
+
+        return [score1,score2,score3,score4,score5]
 
 
 
@@ -187,21 +205,16 @@ class Student:
         return Student.DISTANCES[zipcode]*1.5
 
 def main():
-    
-    student = Student(0,'Monday',2,2)
-    student.generateScore()
+    student = Student(0,2,2)
+    student_score = student.getData()
+    print(student_score)
 
-    sheet_length = len(student.data)
-    print(sheet_length)
+    print(len(student.data))
 
-    print('row')
-    print(student.row)
-    
-##
-##    student2 = Student(1,'Monday',2,2)
-##    student2.generateScore()
-##
-##    student3 = Student(2,'Monday',2,2)
-##    student3.generateScore()
+    for i in range(len(student.data)):
+        student2 = Student(i+1,2,2)
+        student2_score = student2.getData()
+        print(student2_score)
+
 
 if __name__ == '__main__': main()
