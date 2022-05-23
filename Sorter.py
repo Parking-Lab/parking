@@ -11,8 +11,16 @@ class Sorter:
         Args:
             students (list[students]): a list of all students to be sorted
         """
-        self.students = students
-        self.students.sort(key = lambda x: x.generateScore())
+        self.students = dict(zip(students, [[0 for _ in range(5)] for _ in range(len(students))]))
+        
+        self._sort()
+
+    def _sort(self):
+        students = list(self.students.keys())
+        for day in range(5):
+            students.sort(key = lambda x: x.generateScore(day))
+            for rank, s in enumerate(students):
+                self.students[s][day] = rank
 
     def add(self, *student: 'Student') -> 'None':
         """Adds `student` to the list of students, and places them in the correct order
@@ -21,7 +29,8 @@ class Sorter:
             student (Student, multiple accepted): the student(s) to add.
         """
         for s in student:
-            self.students.insert(bisect.bisect(self.students, s.generateScore(), key = lambda x: x.generateScore()), s)
+            self.students[s] = list(range(5))
+        self._sort()
 
     def update(self, newStudents: 'dict[Student, Student]') -> 'None':
         """updates the current students matching the keys in `newStudents` with their corrosponding values.
