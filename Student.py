@@ -19,7 +19,7 @@ class Student:
     #! this code runs at *definition*, so basically when this file is imported.
     with open('distances.json', 'r') as f:
         DISTANCES = json.load(f)
-        
+
     def __init__(self,row,day,name,distance,car):
 
         self.score = 0
@@ -30,8 +30,8 @@ class Student:
         self.name = name
         self.car = car
         self.distance = distance
-        self.crash = crash
-        self.strike = strike
+        self.crash = 0 #TODO: get actual data for these two things
+        self.strike = 0
         
         
         #critical need for days of the week
@@ -105,6 +105,13 @@ class Student:
         self.commute_weight = 1.2
         self.strike_weight = -20
         self.crash_weight = -500"""
+    def __hash__(self) -> int:
+        """hash implementation for Student. Don't call, use `hash(Student)`. Based on the name.
+
+        Returns:
+            int: the hash for this Student
+        """
+        return hash(self.name)
 
     def calcDistance(self,score):
         addition = self.distance * self.commute_weight
