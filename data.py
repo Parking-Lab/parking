@@ -51,6 +51,8 @@ class Data:
         self.finalData = []
         self._formatAllInfo()
 
+        # at the end, delete everything on the weekly sheet
+
     def _formatAllInfo(self):
         """Formats all info
         """

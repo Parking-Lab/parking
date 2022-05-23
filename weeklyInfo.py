@@ -17,6 +17,9 @@ class WeeklyInfo():
         self.sa = gspread.service_account()
         self.sh = self.sa.open("CSUS Parking Data")
         self.wks = self.sh.worksheet("WeeklyInfo")
+
+        self.wks.sort((2, 'asc'))
+
         self.allInfo = self.wks.get_all_values() # NOTE: QUOTA
 
         self.numRows = len(self.allInfo)
@@ -50,6 +53,7 @@ class WeeklyInfo():
         usersDict = {} # key : value where value is [time, row]
         row = 0
         num = 0
+        # print(len(self.allInfo))
         while row < len(self.allInfo):
             user = self.allInfo[row][1]
             time = self.allInfo[row][0]
@@ -61,6 +65,7 @@ class WeeklyInfo():
                     usersDict[user] = [time, row]
                 else: 
                     self.allInfo.pop(row) # pop current row because time is more than previous row
+                    # print("row popped",row, " cur row:", usersDict[user][1]) # the row
 
                 num+=1
             else:

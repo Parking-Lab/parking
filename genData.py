@@ -1,5 +1,4 @@
 ''''
-
 Alison
 
 Generate random data for testing purposes
@@ -196,7 +195,7 @@ def main():
     data = GenData()
     # COMMENT OUT THE BELOW ACCORDING TO WHAT YOU WANT TO SIMULATE!
     data.genWeeklyData(150)
-    # data.genBaseData()
+    data.genBaseData()
 
 
 if __name__ == '__main__': main()
