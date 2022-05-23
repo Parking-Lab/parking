@@ -48,8 +48,9 @@ class Student:
             
         self.data = Data()
         self.data = self.data.getFormattedInfo()
-
-        print(self.data)
+        
+##        print('new')
+##        print(self.data)
         
         self.row = self.data[row]
 
@@ -81,6 +82,9 @@ class Student:
 
         #boolean
         self.parallel = self.row[17]
+
+        print('len')
+        print(len(self.row))
 
         #the amount of days it has been since the student has been able to park on campus - adjust score based on this variable in generateScore()
         self.spot_since = 0
@@ -177,11 +181,12 @@ class Student:
     
 
 def main():
+    
     student = Student(0,'Monday',2,2)
     student.generateScore()
 
-    student2 = Student(1,'Monday',2,2)
-    student2.generateScore()
+    sheet_length = len(student.data)
+    print(sheet_length)
 
     student3 = Student(2,'Monday',2,2)
     student3.generateScore()
