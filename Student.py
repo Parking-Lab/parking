@@ -16,7 +16,10 @@ import json
 from data import Data
 
 class Student:
-
+    #! this code runs at *definition*, so basically when this file is imported.
+    with open('distances.json', 'r') as f:
+        DISTANCES = json.load(f)
+        
     def __init__(self,row,day,name,distance,car):
 
         self.score = 0
