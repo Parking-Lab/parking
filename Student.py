@@ -5,7 +5,8 @@ class Student:
 
 
      def __init__(self,row,day,name,distance,car):
-
+#initializing
+       #instance variables
          self.score = 0
          #day of the week that this program is being run for
          self.day = day
@@ -90,21 +91,32 @@ class Student:
          self.strike_weight = -20
          self.crash_weight = -500"""
 
-     def calcDistance(self,score):
-         addition = self.distance * self.commute_weight
-         scoring = score + addition
-         return scoring
     
-
+     def distScore(zipcode: int) -> float:
+        """gets the score for a given zip code.
+        Args:
+            zipcode (int): the zip code to get the score for
+        Raises:
+            KeyError: if the zipcode is invalid
+            
+        Returns:
+            float: the resulting score, based on the l1 distance to 94010 (school)
+        """
+        return  Student.DISTANCES[zipcode]*1.5
+     
      def strike_crash(self, score, strike, crash):
+         '''adds in the impact of strike and crashes into overall score'''
+       #multiples strike and crash by weights and adds to score
          self.wstrike = strike * self.strike_weight
          self.wcrash = crash * self.crash_weight
          scorewstrikes = score + self.wstrike + self.wcrash
          return scorewstrikes
     
      def generateScore(self, day):
+         '''multiplies the lists for weights and the student inputs to generate a baseline score which is later edited through taking into account distances and strikes/crashes'''
 
-         if day == 'Monday':
+         if day == 'Monday': 
+          #passes day and generates different score 
              crit = self.mon_crit
          if day == 'Tuesday':
              crit = self.tue_crit
@@ -115,26 +127,26 @@ class Student:
          if day == 'Friday':
              crit = self.fri_crit
 
-         student_listing = [self.fpFree,self.lpFree,self.sports,crit,self.strike, self.crash] 
+         student_listing = [self.fpFree,self.lpFree,self.sports,crit,self.strike, self.crash]  #list of student responses per day
          student_weighting = [self.fpfree_weight,self.lpfree_weight,self.sports_weight, self.crit_weight,self.strike_weight, self.crash_weight] 
-
+#list of student weights updated from google sheets
          scorelist = []
 
          for i in range(len(student_listing)):
               num = student_listing[i] * student_weighting[i]
               scorelist.append(num)
          score = sum(scorelist)
-               
-        
+               #multiply weights x inputs and sum all elements to get a final score/sum
+        # if carpool, adds score.
          if self.carpoolUnder == True:
              score = score + (self.carpoolUnder*self.carpoolUnder_weight)
          if self.carpoolSenior == True:
              score = score + (self.carpoolUnder*self.carpoolSenior_weight)
          print(score)
-         scoring = self.calcDistance(score)
+         scoring = self.calcDistance(score) #distance score added
          print(scoring)
          self.strike = 1
-         scorewstrikes = self.strike_crash(scoring, self.strike, self.crash)
+         scorewstrikes = self.strike_crash(scoring, self.strike, self.crash) #strike/crash added
          print(scorewstrikes)
             
                 
