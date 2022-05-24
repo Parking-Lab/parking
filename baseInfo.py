@@ -18,6 +18,9 @@ class BaseInfo:
         self.sa = gspread.service_account()
         self.sh = self.sa.open("CSUS Parking Data")
         self.wks = self.sh.worksheet("BaseInfo")
+        
+        self.wks.sort((2, 'asc'))
+
         self.allInfo = self.wks.get_all_values() # NOTE: QUOTA
 
         self.numRows = len(self.allInfo)
