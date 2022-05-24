@@ -88,7 +88,7 @@ class StrikesInfo():
         if self.userInfoFound(email):
             return int(self.infoDict[email][2])
         else:
-            print("Warning: Student not found!")
+            print("Warning: Student not found!", email)
             return 0
 
     

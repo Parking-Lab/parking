@@ -14,6 +14,16 @@ git clone https://github.com/Parking-Lab/parking.git
 3. type the following commands in command line:
 
 cd
+pip3 install --upgrade pip
+pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+pip3 install gspread
+mkdir ~/.config/gspread
+cp Downloads/parking_service_account.json ~/.config/gspread/service_account.json
+
+4. if the above doesn't work, try this:
+
+cd
+pip install --upgrade pip
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 pip install gspread
 mkdir ~/.config/gspread
