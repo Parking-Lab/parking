@@ -23,7 +23,7 @@ class Student:
     def __init__(self,row,data):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
-        Args:
+        Args:s
             row: considering Student objects might be defined in a for loop, the row variable will serve
             to access the corresponding GSheet row and access information from it
 
