@@ -3,15 +3,14 @@ Sorter Class
 
 This class holds students, and sorts them based on rank.
 '''
-import bisect
 import pandas as pd
 from Student import Student
 class Sorter:
     MAX_REG = 20
     MAX_SML = 2
     MAX_PAR = 4
-    MAX_CAMPUS = MAX_REG + MAX_SML + MAX_PAR
     DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] #augh why people why
+
     def __init__(self, students: 'list[Student]') -> 'None':
         """constructor for Sorter object. sorts students upon intialization.
 
@@ -25,12 +24,19 @@ class Sorter:
         
         self._addScores()
     def _getStudentList(self):
+        """gets a list of the students in the current df's order
+
+        Returns:
+            list[Student]: list of students
+        """
         return list(self.students.index.values())
 
     def _addScores(self): #basically, get all the students, sort them separately for each day, then put the rankings into the df
+        """adds people's scores to the df
+        """
         for s in self._getStudentList():
             for day in Sorter.DAYS:
-                self.students[s][day] = s.generateScores(day)
+                self.students[s][day] = s.generateScores(Sorter.DAYS[day])
 
     def add(self, *student: 'Student') -> 'None':
         """Adds `student` to the list of students, and places them in the correct order
@@ -38,8 +44,8 @@ class Sorter:
         Args:
             student (Student, multiple accepted): the student(s) to add.
         """
-        for s in student:
-            self.students[s] = list(range(5))
+
+        self.students = pd.concat(self.students, pd.df(dict(zip(student, [[0 for _ in range(5)] for _ in range(len(student))]))))
         self._addScores()
 
     def __getitem__(self, idx: 'int|str|Student', day: int = None) -> 'Student|int':
@@ -122,17 +128,19 @@ class Sorter:
                     output[day]['SML'].append(student)
                 elif len(output[day]['REG'])<Sorter.MAX_REG:
                     output[day]['REG'].append(student)
-                if student.canParallelPark() and not student.hasSmallCar() and len(output[day]['PAR'])==Sorter.MAX_PAR and len(output[day]['SML'])<Sorter.MAX_SML and len(output[day]['REG'])==Sorter.MAX_REG and True in list(map(lambda s: s.canParallelPark() and s.hasSmallCar(), output[day]['PAR'])):
-                    pass #panic! there's a problem!
-                    # problem: if someone can park in par and small, they get put in par, but if there's someone 
-                    # else later who can park in par but not sml, and par and reg is full, but sml is not, they'd 
-                    # get put in barts even when they can park on campus
+                
+                #TODO: decide if this bug is worth fixing
+                # if student.canParallelPark() and not student.hasSmallCar() and len(output[day]['PAR'])==Sorter.MAX_PAR and len(output[day]['SML'])<Sorter.MAX_SML and len(output[day]['REG'])==Sorter.MAX_REG and True in list(map(lambda s: s.canParallelPark() and s.hasSmallCar(), output[day]['PAR'])):
+                #     pass #panic! there's a problem!
+                #     # problem: if someone can park in par and small, they get put in par, but if there's someone 
+                #     # else later who can park in par but not sml, and par and reg is full, but sml is not, they'd 
+                #     # get put in barts even when they can park on campus
             
 
 
 
     def __iter__(self) -> 'Sorter':
-        """initialization method for for loops.
+        """initialization method for for loops, allowing looping through students by rank
 
         Returns:
             Sorter: this Sorter object, initialized for iteration
@@ -141,7 +149,7 @@ class Sorter:
         return self
 
     def __next__(self) -> 'Student':
-        """gets the next element in self.
+        """gets the next ranked student in self.
 
         Returns:
             Student: the next ranked student.
@@ -154,6 +162,6 @@ class Sorter:
 
 
 def main():
-    s = Sorter([Student(0,'Monday',2,2)])
+    s = Sorter()
 
 if __name__ == '__main__': main()
