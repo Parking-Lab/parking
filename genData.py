@@ -1,11 +1,10 @@
 ''''
-Alison
+Author: Alison
 
 Generate random data for testing purposes
 
 NOTE: Run this file once to generate new info (note that it WILL NOT be cleaned up, so 
 duplicate entries from the same person will still be there. Once a Datta object is created, process will be done :)
-
 '''
 
 import gspread

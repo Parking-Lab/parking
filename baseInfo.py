@@ -5,7 +5,6 @@ Base Info Class (BaseInfo):
     Description: accesses information pertaining to student's base info from Google Sheets
     Main Functionality: Organizes and outputs information from the base info Google Form (yearly form)
     NOTE: Do not use this class directly. It is implemented in the Data class
-
 '''
 
 import gspread

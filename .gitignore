@@ -1,12 +1,9 @@
 #! SECKURITEE
 parking_service_account.json
 
-<<<<<<< HEAD
 # gitignore
 gspread/
 
-=======
->>>>>>> 0fd8acd... added genScore and fixed dot product
 # to prevent ds store troubles
 .DS_Store
 

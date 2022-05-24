@@ -1,0 +1,29 @@
+Only do the following instructions at the start of each school year!
+
+Instructions:
+    1) Go to directory in mycsus
+    2) View full grade in list format 
+    3) Select all names and emails (just press and drag alll the way down)
+    4) copy
+    5) paste into this file after the end of these Instructions
+    6) go to terminal and do the following:
+
+    cd
+    cd Desktop/parking-main
+    python3 listStudents.py
+
+    7) you're done!
+
+
+    
+
+    
+
+
+
+
+
+
+
+
+

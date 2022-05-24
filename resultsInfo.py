@@ -1,12 +1,10 @@
 '''
-
 Author: Alison
 
 Results Info Class (ResultsInfo):
     Description: accesses the Google Sheet where the final results of the sorting program will be displayed 
     Main Functionality: Outputs information from the program onto the Google Sheet
     NOTE: Do not use this class directly. It is implemented in the Data class
-
 '''
 
 import gspread

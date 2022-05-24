@@ -4,7 +4,9 @@ Author: Alison
 Generate list of students (StrikesInfo):
     Description: sets up Google Sheet about all student info
     Main Functionality: just updates Google Sheet
-    NOTE: DON'T USE THIS CLASS PLS!
+
+Instructions:
+    Open the students.txt file to see the instructions!
 '''
 
 import gspread
