@@ -14,13 +14,13 @@ This class holds information for the student object
 from data import Data
 import json
 
-class Student:
+class Student: 
 
     #! this code runs at *definition*, so basically when this file is imported.
     with open('distances.json', 'r') as f:
         DISTANCES = json.load(f)
     
-    def __init__(self,row,form_sheet,weight_sheet):
+    def __init__(self,row,data):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
         Args:
@@ -44,11 +44,8 @@ class Student:
 
         #day of the week that this program is being run for
             
-        self.data = Data()
+        self.data = data
         self.data = self.data.getFormattedInfo()
-        
-##        print('new')
-##        print(self.data)
         
         self.row = self.data[row]
 
@@ -80,6 +77,8 @@ class Student:
 
         #boolean
         self.parallel = self.row[17]
+
+        self.strikes = self.row[18]
 
         print('len')
         print(len(self.row))
@@ -120,8 +119,9 @@ class Student:
         '''To be written by Nambita and Aditya'''
 
         self.day = day
+        
 
-        print(self.name)
+        #print(self.name)
 
         if self.day == 'Monday': 
             crit = self.mon_crit
@@ -134,7 +134,21 @@ class Student:
         if self.day == 'Friday':
             crit = self.fri_crit
 
-        listing = [self.fpFree,self.lpFree,self.sports_mon,self.sports_tue,self.sports_wed,self.sports_thu,self.sports_fri]
+        if self.day == 'Monday': 
+            sport = self.sports_mon
+        if self.day == 'Tuesday':
+            sport = self.sports_tue
+        if self.day == 'Wednesday':
+            sport = self.sports_wed
+        if self.day == 'Thursday':
+            sport = self.sports_thu
+        if self.day == 'Friday':
+            sport = self.sports_fri        
+
+
+
+        listing = [self.fpFree,self.lpFree,crit,sport]
+
         
         #convertResponse = convertResponses(listing)
         weighting = [16,8,10, 40,-40, -40]
@@ -144,10 +158,12 @@ class Student:
         
         #convertResponse = convertResponses(listing)
         scorelist = []
-        #print(listing)
-        for i in listing:
+        
+        for i in range(len(listing)):
             num = listing[i] * weighting[i]
             scorelist.append(num)
+
+
         score = sum(scorelist)
                 
         
@@ -155,8 +171,9 @@ class Student:
                 score = score + (self.carpoolMult*1.25)
         if self.carpoolSeniors == 1:
                 score = score + (self.carpoolSeniors*3)
-        print('name')
-        print(self.name)
+
+        #print('name')
+        #print(self.name)
                 
 
         #scoring = distance(score, self.commute)
@@ -205,16 +222,28 @@ class Student:
         return Student.DISTANCES[zipcode]*1.5
 
 def main():
-    student = Student(0,2,2)
+    data = Data()
+    student = Student(0,data)
     student_score = student.getData()
+    print(student.name)
     print(student_score)
 
     print(len(student.data))
 
-    for i in range(len(student.data)):
-        student2 = Student(i+1,2,2)
+    for i in range(len(student.data)-1):
+        student2 = Student(i+1,data)
         student2_score = student2.getData()
+        print(student2.name)
         print(student2_score)
 
+        
+                   
+    
+##
+##    student2 = Student(1,'Monday',2,2)
+##    student2.generateScore()
+##
+##    student3 = Student(2,'Monday',2,2)
+##    student3.generateScore()
 
 if __name__ == '__main__': main()
