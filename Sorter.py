@@ -4,6 +4,8 @@ Sorter Class
 This class holds students, and sorts them based on rank.
 '''
 import bisect
+import pandas as pd
+from Student import Student
 class Sorter:
     def __init__(self, students: 'list[Student]') -> 'None':
         """constructor for Sorter object. sorts students upon intialization.
@@ -12,11 +14,13 @@ class Sorter:
             students (list[students]): a list of all students to be sorted
         """
         self.students = dict(zip(students, [[0 for _ in range(5)] for _ in range(len(students))]))
+        self.students = pd.df(self.students, orient = 'index', columns = [0,1,2,3,4])
+        print(self.students.head())
         
         self._sort()
 
     def _sort(self):
-        students = list(self.students.keys())
+        students = list(self.students.index.values())
         for day in range(5):
             students.sort(key = lambda x: x.generateScore(day))
             for rank, s in enumerate(students):
@@ -31,19 +35,6 @@ class Sorter:
         for s in student:
             self.students[s] = list(range(5))
         self._sort()
-
-    def update(self, newStudents: 'dict[Student, Student]') -> 'None':
-        """updates the current students matching the keys in `newStudents` with their corrosponding values.
-
-        Raises:
-            KeyError: if a key in the newStudents doesn't exist in this Sorter.
-
-        Args:
-            newStudents (dict[Student, Student]): dict of updates, in the form {current: new, current: new, ...}
-        """
-        for cur, new in newStudents:
-            self.students[self.students.index(cur)] = new
-        self.students.sort(key = lambda x: x.generateScore())
 
     def __getitem__(self, day: int, idx: 'int|str|Student' = 0) -> 'Student|int':
         """gets an item, using subscript notation like a list. Takes an int (rank), str (student's name), or Student (actual equivalent student object).
@@ -61,7 +52,7 @@ class Sorter:
             Student|int : the rank or student requested
         """
         if isinstance(idx, int):
-            return self.students[-1-idx][day]
+            return self.students.loc[self.students[day]==idx]
         if isinstance(idx, str):
             return self.students[list(map(lambda x: x.name, self.students)).index(idx)][day]
         if isinstance(idx, Student):
