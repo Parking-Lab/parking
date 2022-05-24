@@ -128,3 +128,9 @@ class Sorter:
             Student: the next ranked student.
         """
         pass
+
+
+def main():
+    s = Sorter([Student(0,'Monday',2,2)])
+
+if __name__ == '__main__': main()
