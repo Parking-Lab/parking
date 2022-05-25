@@ -109,11 +109,13 @@ class Student:
 ##        self.strike_weight = self.weight_column[9]
 ##        self.crash_weight = self.weight_column[10]
 ##
+    def __repr__(self):
+        return f'Student: {self.name}'
 
     def getName(self):
         return self.name
 
-    def getCanParallelPark(self):
+    def canParallelPark(self):
         if self.parallel == 1:
             return True
         return False

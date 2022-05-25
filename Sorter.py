@@ -5,6 +5,8 @@ This class holds students, and sorts them based on rank.
 '''
 import pandas as pd
 from Student import Student
+from data import Data
+import numpy as np
 class Sorter:
     MAX_REG = 20
     MAX_SML = 2
@@ -17,26 +19,27 @@ class Sorter:
         Args:
             students (list[students]): a list of all students to be sorted
         """
-        self.students = dict(zip(students, [[0 for _ in range(5)] for _ in range(len(students))]))
-        self.students = pd.df(self.students, orient = 'index', columns = Sorter.DAYS)
+        self.students = [[0 for _ in range(5)] for _ in range(len(students))]
+        self.students = pd.DataFrame(self.students, index = students, columns = Sorter.DAYS)
         self.students.insert(0, 'name', list(map(lambda x: x.getName(), self._getStudentList())))
-        print(self.students.head())
-        
+
         self._addScores()
+        # print(self.students.head())
+        
     def _getStudentList(self):
         """gets a list of the students in the current df's order
 
         Returns:
             list[Student]: list of students
         """
-        return list(self.students.index.values())
+        return self.students.index.values.tolist()
 
     def _addScores(self): #basically, get all the students, sort them separately for each day, then put the rankings into the df
         """adds people's scores to the df
         """
         for s in self._getStudentList():
             for day in Sorter.DAYS:
-                self.students[s][day] = s.generateScores(Sorter.DAYS[day])
+                self.students.at[s, day] = s.generateScore(day)
 
     def add(self, *student: 'Student') -> 'None':
         """Adds `student` to the list of students, and places them in the correct order
@@ -45,7 +48,7 @@ class Sorter:
             student (Student, multiple accepted): the student(s) to add.
         """
 
-        self.students = pd.concat(self.students, pd.df(dict(zip(student, [[0 for _ in range(5)] for _ in range(len(student))]))))
+        self.students = pd.concat(self.students, pd.DataFrame(dict(zip(student, [[0 for _ in range(5)] for _ in range(len(student))]))))
         self._addScores()
 
     def __getitem__(self, idx: 'int|str|Student', day: int = None) -> 'Student|int':
@@ -63,10 +66,12 @@ class Sorter:
         Returns:
             Student|int : the rank or student requested
         """
+        if isinstance(idx, tuple): #hack because you can't actually have two args in __getitem__, just ignore this
+            idx, day = idx
         if day == None:
-            return [self[d, idx] for d in range(5)]
+            return [self[idx, d] for d in range(5)]
         if isinstance(idx, int):
-            return self.students.sort_values(Sorter.DAYS[day], axis = 'columns', ascending = False).index.values()[idx]
+            return self.students.sort_values(Sorter.DAYS[day], ascending = False).index.values.tolist()[idx]
         if isinstance(idx, str):
             return self.students.sort_values(Sorter.DAYS[day], axis = 'columns', ascending = False)['name'].to_list().index(idx)
         if isinstance(idx, Student):
@@ -87,7 +92,7 @@ class Sorter:
         """
         if isinstance(student, int): # it's a rank
             self.students.drop(#        sort by rank on day                 in descending order        get index at rank
-                self.students.sort_values(Sorter.DAYS[day], axis = 'columns', ascending = False).index.values()[student])
+                self.students.sort_values(Sorter.DAYS[day], axis = 'columns', ascending = False).index.values.tolist()[student])
         if isinstance(student, str): # it's a name
             self.students.drop(self.students[self.students['name'] == student]) #drop all columns where the name is student
         if isinstance(student, Student): #it's a student object
@@ -109,25 +114,34 @@ class Sorter:
             raise TypeError(f'Expected `other` of type Sorter but received {type(other)}')
         return Sorter(other._getStudentList()+self._getStudentList())
 
-    def getAssignments(self) -> 'tuple[dict[str, list[Student]]]':
+    def getAssignments(self) -> 'list[list[str]]':
         """gets the final assignments for the week's parking
 
         Returns:
-            tuple[dict[str, list[Student]]]: list of a dict for each day containing {parking zone: list of student objects}
+            list[list[str]]: arr[][] where arr[n][0] is student N's name, and arr[n][1:6] is student N's parking assignment by day
         """
+        # for each day (5x):
+        #   {
+        #       reg: [student, student, student]
+        #       sml: [student, student, student]
+        #       par: [student, student, student]
+        #   }
+
         #for each day
             #get order of students
             #make and append dict of zones based on rank
-        output = [dict(zip(['REG', 'SML', 'PAR'], 
-                           [[],    [],    []])) for _ in range(5)]
+        results = [dict(zip(['REG', 'SML', 'PAR', 'BART'], 
+                            [[],    [],    [],    []])) for _ in range(5)]
         for students in self:
             for day, student in enumerate(students):
-                if student.canParallelPark() and len(output[day]['PAR'])<Sorter.MAX_PAR:
-                    output[day]['PAR'].append(student)
-                elif student.hasSmallCar() and len(output[day]['SML'])<Sorter.MAX_SML:
-                    output[day]['SML'].append(student)
-                elif len(output[day]['REG'])<Sorter.MAX_REG:
-                    output[day]['REG'].append(student)
+                if student.canParallelPark() and len(results[day]['PAR'])<Sorter.MAX_PAR:
+                    results[day]['PAR'].append(student)
+                elif student.hasSmallCar() and len(results[day]['SML'])<Sorter.MAX_SML:
+                    results[day]['SML'].append(student)
+                elif len(results[day]['REG'])<Sorter.MAX_REG:
+                    results[day]['REG'].append(student)
+                else:
+                    results[day]['BART'].append(student)
                 
                 #TODO: decide if this bug is worth fixing
                 # if student.canParallelPark() and not student.hasSmallCar() and len(output[day]['PAR'])==Sorter.MAX_PAR and len(output[day]['SML'])<Sorter.MAX_SML and len(output[day]['REG'])==Sorter.MAX_REG and True in list(map(lambda s: s.canParallelPark() and s.hasSmallCar(), output[day]['PAR'])):
@@ -135,9 +149,22 @@ class Sorter:
                 #     # problem: if someone can park in par and small, they get put in par, but if there's someone 
                 #     # else later who can park in par but not sml, and par and reg is full, but sml is not, they'd 
                 #     # get put in barts even when they can park on campus
-            
+        
+        output = pd.DataFrame(np.zeros((len(self._getStudentList()), 6)), columns = ['Student', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
 
+        output.loc[:, 'Student'] = np.array([x.getName() for x in self._getStudentList()])
 
+        output.set_index('Student', inplace=True)
+
+        for day, data in enumerate(results):
+            for zone, students in data.items():
+                for student in students:
+                    output.at[student.getName(), Sorter.DAYS[day]] = zone
+        
+        print(output.head())
+
+        output.reset_index(inplace=True)
+        return output.values.tolist()
 
     def __iter__(self) -> 'Sorter':
         """initialization method for for loops, allowing looping through students by rank
@@ -162,6 +189,9 @@ class Sorter:
 
 
 def main():
-    s = Sorter()
+    data = Data()
+    students = [Student(i, data) for i in range(len(data.getFormattedInfo()))]
+    sorter = Sorter(students)
+    data.loadResults(sorter.getAssignments())
 
 if __name__ == '__main__': main()
