@@ -133,7 +133,7 @@ class Data:
             self.finalData.append(formattedRow)
 
     
-    def getFormattedInfo(self) -> list[list]:
+    def getFormattedInfo(self):
         """Gets all information in a formatted fashion (not ordered by name, but abides by set format in TRUE_WEIGHTS)
 
         Returns:
@@ -141,7 +141,7 @@ class Data:
         """
         return self.finalData
     
-    def getKey(self) -> list:
+    def getKey(self):
         """Gets the key
 
         Returns:
@@ -149,7 +149,7 @@ class Data:
         """
         return self.key
 
-    def loadResults(self, newResults:list[list]):
+    def loadResults(self, newResults):
         """Given an array of the new parking results, updates the Google sheet
 
         Args:

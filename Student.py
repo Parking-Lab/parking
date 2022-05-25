@@ -100,7 +100,7 @@ class Student:
 ##        self.carpoolUnder_weight = self.weight_column[2]
 ##        self.carpoolSenior_weight = self.weight_column[3]
 ##        self.fpfree_weight = self.weight_column[4]
-##        self.lpfree_weight = self.weight_column[5]
+##        self.lpfree_weight = self.weight_column[5]
 ##
 ##        self.sports_weight = self.weight_column[6]
 ##        self.crit_weight = self.weight_column[7]
@@ -110,7 +110,7 @@ class Student:
 ##        self.crash_weight = self.weight_column[10]
 ##
     def __repr__(self):
-        return f'Student: {self.name}'
+        return 'Student: ' + self.name
 
     def getName(self):
         return self.name
@@ -124,7 +124,7 @@ class Student:
         return not self.car
         
 
-    def __hash__(self) -> int:
+    def __hash__(self):
         """hash implementation for Student. Don't call, use `hash(Student)`. Based on the name.
         Returns:
             int: the hash for this Student
@@ -222,7 +222,7 @@ class Student:
         return [score1,score2,score3,score4,score5]
 
     @staticmethod
-    def distScore(zipcode: int) -> float:
+    def distScore(zipcode):
         """gets the score for a given zip code.
 
         Args:

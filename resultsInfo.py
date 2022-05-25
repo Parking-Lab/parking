@@ -19,7 +19,7 @@ class ResultsInfo:
         self.wks = self.sh.worksheet("ParkingResults")
         # print("results info constructor, to be created")
 
-    def updateSheet(self, values:list[list]):
+    def updateSheet(self, values):
         """Updates sheet with new results. First clears the sheet then adds them
 
         Args:
