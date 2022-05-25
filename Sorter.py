@@ -161,7 +161,7 @@ class Sorter:
                 for student in students:
                     output.at[student.getName(), Sorter.DAYS[day]] = zone
         
-        print(output.head())
+        # print(output.head())
 
         output.reset_index(inplace=True)
         return output.values.tolist()
@@ -189,9 +189,13 @@ class Sorter:
 
 
 def main():
+    print('Fetching data...')
     data = Data()
+    print('Loading data...')
     students = [Student(i, data) for i in range(len(data.getFormattedInfo()))]
     sorter = Sorter(students)
+    print('Assigning parking zones and uploading results...')
     data.loadResults(sorter.getAssignments())
+    print('Parking Assignments Complete!')
 
 if __name__ == '__main__': main()
