@@ -1,7 +1,7 @@
 #! SECKURITEE
 parking_service_account.json
 
-# gitignore
+parking-env/
 gspread/
 
 # to prevent ds store troubles

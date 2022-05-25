@@ -8,22 +8,7 @@ Instructions:
     5) paste into this file after the end of these Instructions
     6) go to terminal and do the following:
 
-    cd
-    cd Desktop/parking-main
-    python3 listStudents.py
+    cd ~/parking
+    python listStudents.py
 
     7) you're done!
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-
