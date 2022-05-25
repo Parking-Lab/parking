@@ -77,7 +77,42 @@ class Student:
 
         self.spot_since = 0
         self.zone = ''
+<<<<<<< HEAD
 
+=======
+        
+##        #WEIGHTS
+##        self.weight_sheet = weight_sheet
+##        
+##        #has to retrieve the second column from the weights sheet
+##        self.weight_column = self.weight_sheet.getColumn(2,'weight_sheet.smth')
+##
+##        self.carpoolUnder_weight = self.weight_column[2]
+##        self.carpoolSenior_weight = self.weight_column[3]
+##        self.fpfree_weight = self.weight_column[4]
+##        self.lpfree_weight = self.weight_column[5]
+##
+##        self.sports_weight = self.weight_column[6]
+##        self.crit_weight = self.weight_column[7]
+##        
+##        self.commute_weight = self.weight_column[8]
+##        self.strike_weight = self.weight_column[9]
+##        self.crash_weight = self.weight_column[10]
+##
+    def __repr__(self):
+        return f'Student: {self.name}'
+
+    def getName(self):
+        return self.name
+
+    def canParallelPark(self):
+        if self.parallel == 1:
+            return True
+        return False
+
+    def hasSmallCar(self):
+        return not self.car
+>>>>>>> bf6dc992016663a3e5a25b41e7d69d26eb714fd1
         
         #WEIGHTS
         #self.weight_sheet = weight_sheet
