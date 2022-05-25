@@ -77,9 +77,6 @@ class Student:
 
         self.spot_since = 0
         self.zone = ''
-<<<<<<< HEAD
-
-=======
         
 ##        #WEIGHTS
 ##        self.weight_sheet = weight_sheet
@@ -112,7 +109,6 @@ class Student:
 
     def hasSmallCar(self):
         return not self.car
->>>>>>> bf6dc992016663a3e5a25b41e7d69d26eb714fd1
         
         #WEIGHTS
         #self.weight_sheet = weight_sheet
