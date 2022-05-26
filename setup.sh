@@ -15,8 +15,8 @@ python listStudents.py
 cd
 
 #make an alias in bashrc to the runner file
-echo  'alias assignparking="python ~/parking/Sorter.py"' >> ~/.zshrc
-echo  'alias assignparking="python ~/parking/Sorter.py"' >> ~/.bash_profile #backwards compatability!
+echo  'alias assignparking="cd ~/parking; python Sorter.py; cd"' >> ~/.zshrc
+echo  'alias assignparking="cd ~/parking; python Sorter.py; cd"' >> ~/.bash_profile #backwards compatability!
 
 source ~/.zshrc #get those updates
 
