@@ -196,6 +196,9 @@ def main():
     sorter = Sorter(students)
     print('Assigning parking zones and uploading results...')
     data.loadResults(sorter.getAssignments())
+    print('Results posted')
+    data.reset() 
+    print('Cleared weekly form data')
     print('Parking Assignments Complete!')
 
 if __name__ == '__main__': main()
