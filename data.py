@@ -157,11 +157,6 @@ class Data:
         """
         self.resultsInfo.updateSheet(newResults) # that's it!
 
-    def reset(self):
-        """Resets sheets at the end of calculations (notably, clears the weekly sheet of data for the new week)
-        """
-        self.weeklyInfo.clearSheet(True)
-
         
 def main():
     data = Data()
