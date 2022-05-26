@@ -17,8 +17,8 @@ mkdir ~/.config/gspread
 cp Downloads/parking_service_account.json ~/.config/gspread/service_account.json
 
 #make an alias in bashrc to the runner file
-echo  'alias assignparking="python ~/parking/Sorter.py"' >> ~/.zshrc
-echo  'alias assignparking="python ~/parking/Sorter.py"' >> ~/.bashrc #backwards compatability!
+echo  'alias assignparking="source parking-env/bin/activate; python ~/parking/Sorter.py; deactivate"' >> ~/.zshrc
+echo  'alias assignparking="source parking-env/bin/activate; python ~/parking/Sorter.py; deactivate"' >> ~/.bashrc #backwards compatability!
 
 source ~/.bashrc #get those updates
 
