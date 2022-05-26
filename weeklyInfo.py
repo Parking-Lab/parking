@@ -18,6 +18,8 @@ class WeeklyInfo():
         self.sh = self.sa.open("CSUS Parking Data")
         self.wks = self.sh.worksheet("WeeklyInfo")
 
+        self.pastWks = self.sh.worksheet("PastWeekInfo")
+
         self.wks.sort((2, 'asc'))
 
         self.allInfo = self.wks.get_all_values() # NOTE: QUOTA
@@ -40,12 +42,14 @@ class WeeklyInfo():
         if resetInfo: self.allInfo = []
 
     def updateSheet(self):
-        """Updates the sheet with all info
+        """Updates the previous week sheet with all info and clears the current week's responses
         NOTE: QUOTA
         NOTE: inserts the info into the sheet, but subsequent form entries are put at the top...
         """
         self.clearSheet()
-        self.wks.insert_rows(self.allInfo,2)
+        # print(self.pastWks.row_count)
+        self.pastWks.delete_rows(2,self.pastWks.row_count-1)
+        self.pastWks.insert_rows(self.allInfo,2)
 
     def removeDuplicates(self):
         """Removes duplicate form entries
