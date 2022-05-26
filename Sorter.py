@@ -8,8 +8,8 @@ from Student import Student
 from data import Data
 import numpy as np
 class Sorter:
-    MAX_REG = 20
-    MAX_SML = 2
+    MAX_REG = 41
+    MAX_SML = 8
     MAX_PAR = 4
     DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] #augh why people why
 
