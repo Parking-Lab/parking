@@ -5,9 +5,11 @@ For more information on the program, visit the PRD:
 [Project Requirements Document](https://docs.google.com/document/d/10XjM5ys3_QfG48dqYhJT48CZliQvoncWu97uxb0euo8/edit# )
 
 ## Parking Results
-SML: On-campus parking, spots 38-46 
+SML: On-campus parking, spots 38-46 (Small spots)
 
-REG: On-campus parking, spots 52-93
+REG: On-campus parking, spots 52-89
+
+PAR: On-campus parking, 90-93 (Parallel spots)
 
 BART: Parking at St. Barts
 
