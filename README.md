@@ -30,8 +30,11 @@ Additionally, we are open-sourcing our entire algorithm. This choice was made be
 
 # Installation
 This information is also available in the Instructions doc.
-These instructions are for people with macs. If you have windows, this won't work, and you should find someone with a mac. If you have linux, this might work, or might not, but you can figure it out yourself.  
-If you've used python before, or messed with your terminal, you might have changed something that breaks this. It was created to be mostly robust, but it was also created late at night, so beware. There are instructions at the bottom for setting up terminal so it will work if you have worked with python or terminal before.
+These instructions are for people with macs. If you have windows, this won't work, and you should find someone with a mac. If you have linux, this might work, or might not, but you can figure it out yourself like you do for everything else.  
+
+> **Note**
+> If you've messed with your `~/.bash_profile` or `~/.zshrc`, make sure everyone has read and write access: `sudo chmod 666 [file]`. This technically gives execute access too, but I don't remember the numbers for only r/w, it's not a security problem, and is confirmed to work.
+
 
 ## 1. Download the code:
 1. Open the Terminal application by searching for Terminal in Spotlight Search.
@@ -43,7 +46,9 @@ wget https://github.com/Parking-Lab/parking/archive/refs/heads/py2.7-release.zip
 
 ## 2. Download the parking_service_account.json:
 1. Get the parking_service_account.json file from asoong23@csus.org
-3. Download parking_service_account.json and make sure the file is in Downloads
+2. Download parking_service_account.json and make sure the file is in Downloads
+> **Warning**
+> Never share this file with anyone or upload it anywhere. It contains sensitive information.
 
 ## 3. Install everything:
 1. Go to the directory tab on MyCSUS and select your grade in list view. 
@@ -63,12 +68,6 @@ open parking/students.txt
 Once you have run that command, close Terminal. This ensures that the shell updates before you try to run the program.  
 
 The program is now ready to use. Further instructions and documentation are available on the PRD and Instructions document.
-
-# instructions for nerds (if you've used python or terminal before)
-- First, make sure your `python` command points to python2.7. You can check this by running `python -V`. If it points to another version of python, check if `python2` or `python2.7` works (you can check the same way). If it does, then you can use these instructions if you just enter `alias python="python2"` (or `"python2.7"` if that was the one that worked) every time you open terminal while installing or running the program.
-- If you use conda, run `conda deactivate`.
-- If you have edited/created a `~/.bash_profile` or `~/.zshrc` file, make sure everyone has r/w permissions. You can do this with `sudo chmod 666 [file]`. Technically, this gives execute permissions to everyone too, but I don't remember exactly what the numbers are for r/w and this is confirmed to work.
-- when you run things, make sure you're in the root directory: `cd`
 
 ---------
 
