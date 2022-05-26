@@ -3,7 +3,8 @@ python -m ensurepip --default-pip
 python -m pip install --upgrade pip
 
 #install stuff
-python -m pip install numpy pandas gspread
+python -m pip install nose tornado
+python -m pip install --upgrade numpy pandas gspread
 
 #stuff with service acct
 mkdir ~/.config/gspread 
