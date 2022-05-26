@@ -6,7 +6,9 @@ For more information on the program, visit the PRD:
 
 ## Parking Results
 SML: On-campus parking, spots 38-46 
+
 REG: On-campus parking, spots 52-93
+
 BART: Parking at St. Barts
 
 [This week's parking results](https://docs.google.com/spreadsheets/d/1nRXzXrlvIBJL-9Wj8XlBryqW488KrLgA9EKvBSnCaSg/edit#gid=1448752000)
