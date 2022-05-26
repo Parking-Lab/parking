@@ -30,6 +30,8 @@ Additionally, we are open-sourcing our entire algorithm. This choice was made be
 
 # Installation
 This information is also available in the Instructions doc.
+These instructions are for people with macs. If you have windows, this won't work, and you should find someone with a mac. If you have linux, this might work, or might not, but you can figure it out yourself.  
+If you've used python before, or messed with your terminal, you might have changed something that breaks this. It was created to be mostly robust, but it was also created late at night, so beware. There are instructions at the bottom for setting up terminal so it will work if you have worked with python or terminal before.
 
 ## 1. Download the code:
 1. Open the Terminal application by searching for Terminal in Spotlight Search.
@@ -62,6 +64,12 @@ Once you have run that command, close Terminal. This ensures that the shell upda
 
 The program is now ready to use. Further instructions and documentation are available on the PRD and Instructions document.
 
-----------
+# instructions for nerds (if you've used python or terminal before)
+- First, make sure your `python` command points to python2.7. You can check this by running `python -V`. If it points to another version of python, check if `python2` or `python2.7` works (you can check the same way). If it does, then you can use these instructions if you just enter `alias python="python2"` (or `"python2.7"` if that was the one that worked) every time you open terminal while installing or running the program.
+- If you use conda, run `conda deactivate`.
+- If you have edited/created a `~/.bash_profile` or `~/.zshrc` file, make sure everyone has r/w permissions. You can do this with `sudo chmod 666 [file]`. Technically, this gives execute permissions to everyone too, but I don't remember exactly what the numbers are for r/w and this is confirmed to work.
+- when you run things, make sure you're in the root directory: `cd`
+
+---------
 
 If you have any questions or problems, email rdye23@csus.org, asoong23@csus.org, or consult the internet.
