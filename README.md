@@ -4,6 +4,13 @@
 For more information on the program, visit the PRD:
 [Project Requirements Document](https://docs.google.com/document/d/10XjM5ys3_QfG48dqYhJT48CZliQvoncWu97uxb0euo8/edit# )
 
+## Parking Results
+SML: On-campus parking, spots 38-46 
+REG: On-campus parking, spots 52-93
+BART: Parking at St. Barts
+
+[This week's parking results](https://docs.google.com/spreadsheets/d/1nRXzXrlvIBJL-9Wj8XlBryqW488KrLgA9EKvBSnCaSg/edit#gid=1448752000)
+
 ## Our goal
 Our goal is to make a transparent, equitable, and accessible system to organize the parking scheme at Crystal. From survey data about students’ specific parking needs, our system allows us to optimize for the best distribution of parking spots based on students’ needs. This will be accessible to any student who can park on campus.
 
