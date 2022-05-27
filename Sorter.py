@@ -152,19 +152,19 @@ class Sorter:
         #this block here fixes that problem
         for day in range(5):
             while len(results[day]['SML'])<Sorter.MAX_SML: #keep doing this until sml is filled
-
                 try: 
-                    doubleAbilityStudent = list(map(lambda s: s.hasSmallCar(),     results[day]['PAR'] )).index(True)
-                    parallelBartStudent =  list(map(lambda s: s.canParallelPark(), results[day]['BART'])).index(True)
+                    doubleAbilityStudent = list(map(lambda s: s.hasSmallCar(),     results[day]['PAR'] )).index(True) # find index of students in PAR who could be in SML
+                    parallelBartStudent =  list(map(lambda s: s.canParallelPark(), results[day]['BART'])).index(True) # find index of students in BART who could be in PAR
                 except ValueError: #this means one of the required students was not found
                     break
                 
 
+                # use the indices found to move the PAR person to SML, making room for the BART student to be in PAR.
                 results[day]['SML'].append(results[day]['PAR'].pop(doubleAbilityStudent))
                 results[day]['PAR'].append(results[day]['BART'].pop(parallelBartStudent))
 
         
-        output = pd.DataFrame(np.zeros((len(self._getStudentList()), 6)), columns = ['Student', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
+        output = pd.DataFrame(np.empty((len(self._getStudentList()), 6), dtype = str), columns = ['Student', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
 
         output.loc[:, 'Student'] = np.array([x.getName() for x in self._getStudentList()])
 
