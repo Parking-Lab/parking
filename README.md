@@ -29,8 +29,11 @@ Additionally, we are open-sourcing our entire algorithm. This choice was made be
 ----------
 
 # Installation
-This information is also available in the Instructions doc.
+This information is also available in the Instructions doc.  
 These instructions are for people with macs. If you have windows, this won't work, and you should find someone with a mac. If you have linux, this might work, or might not, but you can figure it out yourself like you do for everything else.  
+
+> **Note**
+> This installation guide requires Python 2.7, which is installed by default on Macs running anything before MacOS Monterey. We chose Python 2.7, even though it is deprecated, because of this ease-of-installation benefit. If you have updated to (or past) Monterey, use the MacOS installer [here](https://www.python.org/downloads/release/python-2718/) to restore python before continuing.
 
 > **Note**
 > If you've messed with your `~/.bash_profile` or `~/.zshrc`, make sure everyone has read and write access: `sudo chmod 666 [file]`. This technically gives execute access too, but I don't remember the numbers for only r/w, it's not a security problem, and is confirmed to work.
