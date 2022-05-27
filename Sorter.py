@@ -142,22 +142,33 @@ class Sorter:
                     results[day]['REG'].append(student)
                 else:
                     results[day]['BART'].append(student)
+
+
+
+        # problem: if someone can park in par and small, they get put in par, but if there's someone 
+        # else later who can park in par but not sml, and par and reg is full, but sml is not, they'd 
+        # get put in barts even when they can park on campus
+
+        #this block here fixes that problem
+        for day in range(5):
+            while len(results[day]['SML'])<Sorter.MAX_SML: #keep doing this until sml is filled
+
+                try: 
+                    doubleAbilityStudent = list(map(lambda s: s.hasSmallCar(),     results[day]['PAR'] )).index(True)
+                    parallelBartStudent =  list(map(lambda s: s.canParallelPark(), results[day]['BART'])).index(True)
+                except ValueError: #this means one of the required students was not found
+                    break
                 
-                #TODO: decide if this bug is worth fixing
-                # if student.canParallelPark() and not student.hasSmallCar() and len(output[day]['PAR'])==Sorter.MAX_PAR and len(output[day]['SML'])<Sorter.MAX_SML and len(output[day]['REG'])==Sorter.MAX_REG and True in list(map(lambda s: s.canParallelPark() and s.hasSmallCar(), output[day]['PAR'])):
-                #     pass #panic! there's a problem!
-                #     # problem: if someone can park in par and small, they get put in par, but if there's someone 
-                #     # else later who can park in par but not sml, and par and reg is full, but sml is not, they'd 
-                #     # get put in barts even when they can park on campus
+
+                results[day]['SML'].append(results[day]['PAR'].pop(doubleAbilityStudent))
+                results[day]['PAR'].append(results[day]['BART'].pop(parallelBartStudent))
+
         
-
-        #now that it's organized and assigned, make it into the correct format:
-
-        output = pd.DataFrame(np.empty((len(self._getStudentList()), 6), dtype=str), columns = ['Student', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
+        output = pd.DataFrame(np.zeros((len(self._getStudentList()), 6)), columns = ['Student', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
 
         output.loc[:, 'Student'] = np.array([x.getName() for x in self._getStudentList()])
 
-        output.set_index('Student', inplace=True) #make it student: mon, tues, ..., fri
+        output.set_index('Student', inplace=True)
 
         for day, data in enumerate(results):
             for zone, students in data.items():
@@ -166,7 +177,7 @@ class Sorter:
         
         # print(output.head())
 
-        output.reset_index(inplace=True) #go back, because tolist() doesn't include indices
+        output.reset_index(inplace=True)
         return output.values.tolist()
 
     def __iter__(self):
