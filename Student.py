@@ -234,7 +234,10 @@ class Student:
         Returns:
             float: the resulting score, based on the l1 distance to 94010 (school)
         """
-        return Student.DISTANCES[zipcode]*0.9
+        try:
+            return Student.DISTANCES[zipcode]*0.9
+        except: #hehe general except go brrrrrrrrr (i don't want to put KeyError cause idk if that's what this raises, idek if this is a dict or json object or what)
+            return 0 #not a valid zipcode, their fault, score 0
 
 def main():
     data = Data()
