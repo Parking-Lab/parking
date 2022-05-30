@@ -234,7 +234,7 @@ class Student:
         Returns:
             float: the resulting score, based on the l1 distance to 94010 (school)
         """
-        return Student.DISTANCES[zipcode]*1.5
+        return Student.DISTANCES[zipcode]*0.9
 
 def main():
     data = Data()
