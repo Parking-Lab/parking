@@ -1,7 +1,14 @@
 import json
 import pandas as pd
 import numpy as np
+from geopy import distance
 
+def getDists(loca, locb):
+    lata, longa = loca
+    latb, longb = locb
+    yDist = distance.distance(loca, (latb, longa)).miles
+    xDist = distance.distance(loca, (lata, longb)).miles
+    return abs(yDist) + abs(xDist)
 
 df = pd.read_csv('~/Documents/zipCodes.txt') #read data
 
@@ -17,30 +24,16 @@ school = np.array([df[df['ZIP'] == 94010]['LAT'],
 school = np.array([school[0][0], school[1][0]])
 coords = df[['LAT', 'LONG']].to_numpy()
 
-dists = coords-school
-dist_abs = np.absolute(dists)
-print(np.array(list(map(np.sum, dist_abs))))
+dists = np.array(list(map(
+    lambda x: getDists(x, school), 
+    coords)))
 
-dists = dict(
-            zip
-            (
-                df['ZIP'].to_list(), 
+print(dists.shape)
 
-                np.array
-                (
-                    list
-                    (
-                        map
-                        (
-                            np.sum, 
-                            dist_abs
-                        )
-                    )
-                )
-            )
-        )
+dists = dict(zip(df['ZIP'].to_list(), dists))
 
-print(dists)
+#print(dists)
 
 with open('distances.json', 'w') as f:
     json.dump(dists, f)
+
