@@ -108,8 +108,13 @@ class Data:
             else: formattedRow.append(0)
 
             # 'Carpool Multiple',
-            if 'multiple' in person[3]: formattedRow.append(1)
-            else: formattedRow.append(0)
+            if 'one' in person[3]: 
+                formattedRow.append(1)
+            elif 'multiple' in person[3]:
+                formattedRow.append(2)
+            else: 
+                formattedRow.append(0)
+            
 
             # 'Carpool Seniors',
             if person[4] == 'Yes': formattedRow.append(1)
