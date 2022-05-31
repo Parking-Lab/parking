@@ -9,7 +9,7 @@ from data import Data
 import numpy as np
 import logging
 LOG_FILENAME = '/tmp/parking_sorter.log'
-logging.basicConfig(filename=LOG_FILENAME, level=logging.ERROR)
+logging.basicConfig(filename=LOG_FILENAME, level=logging.DEBUG)
 class Sorter:
     MAX_REG = 41
     MAX_SML = 8
@@ -214,7 +214,7 @@ def main():
         sorter = Sorter(students)
         print('Assigning parking zones and uploading results...')
         assignments = sorter.getAssignments()
-        print(assignments)
+        logging.debug(str(assignments))
         data.loadResults(assignments)
         print('Parking Assignments Complete!')
     except:
