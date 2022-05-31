@@ -78,18 +78,29 @@ class GenData():
             qualify = 'Yes'
             newRow.append(qualify)
 
+            # seniors
             val = random.random()
-            if val < 0.3: # carpool
-                carpool = 'Yes, I take one person'
-            elif val < 0.6:
-                carpool = 'Yes, I take multiple people'
-            else: carpool = 'No'
-            newRow.append(carpool)
+            for i in range(5):
+                if val < 0.25: # carpool
+                    carpool = '0'
+                elif val < 0.5:
+                    carpool = '1'
+                elif val< 0.75:
+                    carpool = '2'
+                else: carpool = '3+'
+                newRow.append(carpool)
 
-            if random.random() < 0.3: # only one third of people actually carpool with seniors
-                senior = 'Yes'
-            else: senior = 'No'
-            newRow.append(senior)
+            # random
+            val = random.random()
+            for i in range(5):
+                if val < 0.25: # carpool
+                    carpool = '0'
+                elif val < 0.5:
+                    carpool = '1'
+                elif val< 0.75:
+                    carpool = '2'
+                else: carpool = '3+'
+                newRow.append(carpool)
 
             critAccess = []
             if random.random() < 0.5: # critical access monday
