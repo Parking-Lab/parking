@@ -188,13 +188,15 @@ class Student:
         score = sum(scorelist)
                 
         
+        #! start reid's code
+        dayIdx = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].index(day)
         #* multiply the score by a the carpool multiplier
         score *= (
                         1 +                                              # start with one, so by default it's x1, so we get same score
-                        (self.carpoolTotal-self.carpoolSeniors)*0.25 +   # total minus seniors is num underclassmen, mult by 0.25 bc we weight underclassmen less
-                        self.carpoolSeniors                              # add one multiplication per senior, because you're freeing up another spot
+                        (self.carpoolTotal[dayIdx]-self.carpoolSeniors[dayIdx])*0.25 +   # total minus seniors is num underclassmen, mult by 0.25 bc we weight underclassmen less
+                        self.carpoolSeniors[dayIdx]                              # add one multiplication per senior, because you're freeing up another spot
                     )
-
+        #! end reid's code
 
         #print('name')
         #print(self.name)
