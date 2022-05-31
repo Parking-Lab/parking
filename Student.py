@@ -13,6 +13,7 @@ This class holds information for the student object
 '''
 from data import Data
 import json
+import numpy as np
 
 class Student: 
 
@@ -196,6 +197,8 @@ class Student:
                         self.carpoolYoungns[dayIdx]*0.25 +   # total minus seniors is num underclassmen, mult by 0.25 bc we weight underclassmen less
                         self.carpoolYoungns[dayIdx]          # add one multiplication per senior, because you're freeing up another spot
                     )
+        
+        score += np.random.normal(0, 5) #add random bit, mean 0, std. dev 5
         #! end reid's code
 
         #print('name')
