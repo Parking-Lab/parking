@@ -8,8 +8,8 @@ from Student import Student
 from data import Data
 import numpy as np
 import logging
-LOG_FILENAME = '/tmp/parking_sorter.log'
-logging.basicConfig(filename=LOG_FILENAME, level=logging.DEBUG)
+
+logging.basicConfig(filename='/tmp/parking_sorter.log', level=logging.ERROR)
 class Sorter:
     MAX_REG = 41
     MAX_SML = 8
