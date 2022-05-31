@@ -79,25 +79,25 @@ class GenData():
             newRow.append(qualify)
 
             # seniors
-            val = random.random()
             for i in range(5):
-                if val < 0.25: # carpool
+                val = random.random()
+                if val < 0.40: # carpool
                     carpool = '0'
-                elif val < 0.5:
+                elif val < 0.70:
                     carpool = '1'
-                elif val< 0.75:
+                elif val< 0.90:
                     carpool = '2'
                 else: carpool = '3+'
                 newRow.append(carpool)
 
             # random
-            val = random.random()
             for i in range(5):
-                if val < 0.25: # carpool
+                val = random.random()
+                if val < 0.40: # carpool
                     carpool = '0'
-                elif val < 0.5:
+                elif val < 0.70:
                     carpool = '1'
-                elif val< 0.75:
+                elif val< 0.90:
                     carpool = '2'
                 else: carpool = '3+'
                 newRow.append(carpool)
