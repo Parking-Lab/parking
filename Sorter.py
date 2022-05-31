@@ -213,11 +213,13 @@ def main():
         students = [Student(i, data) for i in range(len(data.getFormattedInfo()))]
         sorter = Sorter(students)
         print('Assigning parking zones and uploading results...')
-        data.loadResults(sorter.getAssignments())
+        assignments = sorter.getAssignments()
+        print(assignments)
+        data.loadResults(assignments)
         print('Parking Assignments Complete!')
     except:
         print("An error occurred. Ask for help.")
-        logging.exception()
+        logging.exception("Exception in Main of Sorter.py")
         exit()
 
 if __name__ == '__main__': main()
