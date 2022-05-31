@@ -70,8 +70,8 @@ class Student:
         self.sports_thu = self.row[11]
         self.sports_fri = self.row[12]
         
-        self.carpoolMult = self.row[13]
-        self.carpoolSeniors = self.row[14]
+        self.carpoolSeniors = self.row[13]
+        self.carpoolYoungns = self.row[14]
 
         #first period and last period free
         self.fpFree = self.row[15]
@@ -188,10 +188,15 @@ class Student:
         score = sum(scorelist)
                 
         
-        if self.carpoolMult == 1:
-                score = score + (self.carpoolMult*1.25)
-        if self.carpoolSeniors == 1:
-                score = score + (self.carpoolSeniors*3)
+        #! start reid's code, sorry for editing your method aditya and nambita
+        dayIdx = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].index(day)
+        #* multiply the score by a the carpool multiplier
+        score *= (
+                        1 +                                  # start with one, so by default it's x1, so we get same score
+                        self.carpoolYoungns[dayIdx]*0.25 +   # total minus seniors is num underclassmen, mult by 0.25 bc we weight underclassmen less
+                        self.carpoolYoungns[dayIdx]          # add one multiplication per senior, because you're freeing up another spot
+                    )
+        #! end reid's code
 
         #print('name')
         #print(self.name)

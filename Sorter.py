@@ -8,8 +8,8 @@ from Student import Student
 from data import Data
 import numpy as np
 import logging
-LOG_FILENAME = '/tmp/parking_sorter.log'
-logging.basicConfig(filename=LOG_FILENAME, level=logging.ERROR)
+
+logging.basicConfig(filename='/tmp/parking_sorter.log', level=logging.ERROR)
 class Sorter:
     MAX_REG = 41
     MAX_SML = 8
@@ -213,11 +213,13 @@ def main():
         students = [Student(i, data) for i in range(len(data.getFormattedInfo()))]
         sorter = Sorter(students)
         print('Assigning parking zones and uploading results...')
-        data.loadResults(sorter.getAssignments())
+        assignments = sorter.getAssignments()
+        logging.debug(str(assignments))
+        data.loadResults(assignments)
         print('Parking Assignments Complete!')
     except:
         print("An error occurred. Ask for help.")
-        logging.exception()
+        logging.exception("Exception in Main of Sorter.py")
         exit()
 
 if __name__ == '__main__': main()
