@@ -6,6 +6,7 @@ Data Class (Data):
     Main functionality: Brings together multiple sheets and provides an interface to handle all of them easily
 '''
 
+from calendar import MONDAY
 from baseInfo import BaseInfo
 from weeklyInfo import WeeklyInfo 
 from resultsInfo import ResultsInfo
@@ -21,18 +22,22 @@ class Data:
                         'Name',
                         'Car Size',
                         'Distance (zipcode)',
+
                         'Monday Critical Access',
                         'Tuesday Critical Access',
                         'Wednesday Critical Access',
                         'Thursday Critical Access',
                         'Friday Critical Access',
+
                         'Monday Sports/School Ecs',
                         'Tuesday Sports/School Ecs',
                         'Wednesday Sports/School Ecs',
                         'Thursday Sports/School Ecs',
                         'Friday Sports/School Ecs', 
-                        'Carpool Multiple',
+
                         'Carpool Seniors',
+                        'Carpool Underclassmen',
+
                         'First Period Free',
                         'Last Period Free',
                         'Parallel Parking',
@@ -68,52 +73,58 @@ class Data:
             formattedRow.append(zipcode)
             
             # 'Monday Critical Access',
-            if 'Monday' in person[5]: formattedRow.append(1)
+            if 'Monday' in person[13]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Tuesday Critical Access',
-            if 'Tuesday' in person[5]: formattedRow.append(1)
+            if 'Tuesday' in person[13]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Wednesday Critical Access',
-            if 'Wednesday' in person[5]: formattedRow.append(1)
+            if 'Wednesday' in person[13]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Thursday Critical Access',
-            if 'Thursday' in person[5]: formattedRow.append(1)
+            if 'Thursday' in person[13]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Friday Critical Access',
-            if 'Friday' in person[5]: formattedRow.append(1)
+            if 'Friday' in person[13]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Monday Sports/School Ecs',
-            if 'Monday' in person[7]: formattedRow.append(1)
+            if 'Monday' in person[15]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Tuesday Sports/School Ecs',
-            if 'Tuesday' in person[7]: formattedRow.append(1)
+            if 'Tuesday' in person[15]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Wednesday Sports/School Ecs',
-            if 'Wednesday' in person[7]: formattedRow.append(1)
+            if 'Wednesday' in person[15]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Thursday Sports/School Ecs',
-            if 'Thursday' in person[7]: formattedRow.append(1)
+            if 'Thursday' in person[15]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Friday Sports/School Ecs', 
-            if 'Friday' in person[7]: formattedRow.append(1)
-            else: formattedRow.append(0)
-
-            # 'Carpool Multiple',
-            if 'multiple' in person[3]: formattedRow.append(1)
+            if 'Friday' in person[15]: formattedRow.append(1)
             else: formattedRow.append(0)
 
             # 'Carpool Seniors',
-            if person[4] == 'Yes': formattedRow.append(1)
-            else: formattedRow.append(0)
+            info = []
+            for i in range(3,7+1): # 3 is monday, 7 is friday
+                if person[i] == '3+': info.append(int(3))
+                else: info.append(int(person[i]))
+            formattedRow.append(info)
+
+            # 'Carpool Underclassmen',
+            info = []
+            for i in range(8,12+1): # 8 is monday, 12 is friday
+                if person[i] == '3+': info.append(int(3))
+                else: info.append(int(person[i]))
+            formattedRow.append(info)
 
             # 'First Period Free',
             if self.baseInfo.getFirstPeriod(name): formattedRow.append(1)
@@ -133,7 +144,7 @@ class Data:
             self.finalData.append(formattedRow)
 
     
-    def getFormattedInfo(self) -> list[list]:
+    def getFormattedInfo(self):
         """Gets all information in a formatted fashion (not ordered by name, but abides by set format in TRUE_WEIGHTS)
 
         Returns:
@@ -141,7 +152,7 @@ class Data:
         """
         return self.finalData
     
-    def getKey(self) -> list:
+    def getKey(self):
         """Gets the key
 
         Returns:
@@ -149,14 +160,13 @@ class Data:
         """
         return self.key
 
-    def loadResults(self, newResults:list[list]):
+    def loadResults(self, newResults):
         """Given an array of the new parking results, updates the Google sheet
 
         Args:
             newResults (list[list]): new parking results
         """
         self.resultsInfo.updateSheet(newResults) # that's it!
-
         
 def main():
     data = Data()
@@ -164,6 +174,5 @@ def main():
     # print(data.getFormattedInfo())
     # values = [['hi', 'hi', 'hi', 'hi'], ['hello','hello','hello']]
     # data.loadResults(values)
-    # data.reset()
 
 if __name__ == '__main__': main()

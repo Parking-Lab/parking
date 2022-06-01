@@ -13,6 +13,7 @@ This class holds information for the student object
 '''
 from data import Data
 import json
+import numpy as np
 
 class Student: 
 
@@ -70,8 +71,8 @@ class Student:
         self.sports_thu = self.row[11]
         self.sports_fri = self.row[12]
         
-        self.carpoolMult = self.row[13]
-        self.carpoolSeniors = self.row[14]
+        self.carpoolSeniors = self.row[13]
+        self.carpoolYoungns = self.row[14]
 
         #first period and last period free
         self.fpFree = self.row[15]
@@ -100,7 +101,7 @@ class Student:
 ##        self.carpoolUnder_weight = self.weight_column[2]
 ##        self.carpoolSenior_weight = self.weight_column[3]
 ##        self.fpfree_weight = self.weight_column[4]
-##        self.lpfree_weight = self.weight_column[5]
+##        self.lpfree_weight = self.weight_column[5]
 ##
 ##        self.sports_weight = self.weight_column[6]
 ##        self.crit_weight = self.weight_column[7]
@@ -110,7 +111,7 @@ class Student:
 ##        self.crash_weight = self.weight_column[10]
 ##
     def __repr__(self):
-        return f'Student: {self.name}'
+        return 'Student: ' + self.name
 
     def getName(self):
         return self.name
@@ -124,7 +125,7 @@ class Student:
         return not self.car
         
 
-    def __hash__(self) -> int:
+    def __hash__(self):
         """hash implementation for Student. Don't call, use `hash(Student)`. Based on the name.
         Returns:
             int: the hash for this Student
@@ -188,10 +189,17 @@ class Student:
         score = sum(scorelist)
                 
         
-        if self.carpoolMult == 1:
-                score = score + (self.carpoolMult*1.25)
-        if self.carpoolSeniors == 1:
-                score = score + (self.carpoolSeniors*3)
+        #! start reid's code, sorry for editing your method aditya and nambita
+        dayIdx = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].index(day)
+        #* multiply the score by a the carpool multiplier
+        score *= (
+                        1 +                                  # start with one, so by default it's x1, so we get same score
+                        self.carpoolYoungns[dayIdx]*0.25 +   # total minus seniors is num underclassmen, mult by 0.25 bc we weight underclassmen less
+                        self.carpoolYoungns[dayIdx]          # add one multiplication per senior, because you're freeing up another spot
+                    )
+        
+        score += np.random.normal(0, 5) #add random bit, mean 0, std. dev 5
+        #! end reid's code
 
         #print('name')
         #print(self.name)
@@ -222,7 +230,7 @@ class Student:
         return [score1,score2,score3,score4,score5]
 
     @staticmethod
-    def distScore(zipcode: int) -> float:
+    def distScore(zipcode):
         """gets the score for a given zip code.
 
         Args:
@@ -234,7 +242,10 @@ class Student:
         Returns:
             float: the resulting score, based on the l1 distance to 94010 (school)
         """
-        return Student.DISTANCES[zipcode]*1.5
+        try:
+            return Student.DISTANCES[zipcode]*0.9
+        except: #hehe general except go brrrrrrrrr (i don't want to put KeyError cause idk if that's what this raises, idek if this is a dict or json object or what)
+            return 0 #not a valid zipcode, their fault, score 0
 
 def main():
     data = Data()

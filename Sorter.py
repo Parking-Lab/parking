@@ -7,13 +7,16 @@ import pandas as pd
 from Student import Student
 from data import Data
 import numpy as np
+import logging
+
+logging.basicConfig(filename='/tmp/parking_sorter.log', level=logging.ERROR)
 class Sorter:
     MAX_REG = 41
     MAX_SML = 8
     MAX_PAR = 4
     DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] #augh why people why
 
-    def __init__(self, students: 'list[Student]') -> 'None':
+    def __init__(self, students):
         """constructor for Sorter object. sorts students upon intialization.
 
         Args:
@@ -41,7 +44,7 @@ class Sorter:
             for day in Sorter.DAYS:
                 self.students.at[s, day] = s.generateScore(day)
 
-    def add(self, *student: 'Student') -> 'None':
+    def add(self, *student):
         """Adds `student` to the list of students, and places them in the correct order
 
         Args:
@@ -51,7 +54,7 @@ class Sorter:
         self.students = pd.concat(self.students, pd.DataFrame(dict(zip(student, [[0 for _ in range(5)] for _ in range(len(student))]))))
         self._addScores()
 
-    def __getitem__(self, idx: 'int|str|Student', day: int = None) -> 'Student|int':
+    def __getitem__(self, idx, day = None):
         """gets an item, using subscript notation like a list. Takes an int (rank), str (student's name), or Student (actual equivalent student object).
 
         Args:
@@ -76,9 +79,9 @@ class Sorter:
             return self.students.sort_values(Sorter.DAYS[day], axis = 'columns', ascending = False)['name'].to_list().index(idx)
         if isinstance(idx, Student):
             return self.students.sort_values(Sorter.DAYS[day], axis = 'columns', ascending = False).iloc(idx, Sorter.DAYS[day])
-        raise TypeError(f'Expected idx of type int|str|Student but received {type(idx)}.')
+        raise TypeError('Expected idx of type int|str|Student but received ' + str(type(idx)))
 
-    def delete(self, day: int, student: 'int|str|Student') -> 'None':
+    def delete(self, day, student):
         """deletes the student at the rank, with the name, or equal to the Student.
 
         Raises:
@@ -98,7 +101,7 @@ class Sorter:
         if isinstance(student, Student): #it's a student object
             self.students.drop(student) #just drop the column, easy
 
-    def __add__(self, other: 'Sorter') -> 'Sorter':
+    def __add__(self, other):
         """merges this an the other Sorter together, and returns the result. Does not modify either Sorter.
 
         Args:
@@ -111,10 +114,10 @@ class Sorter:
             Sorter: the merge result
         """
         if not isinstance(other, Sorter):
-            raise TypeError(f'Expected `other` of type Sorter but received {type(other)}')
+            raise TypeError('Expected `other` of type Sorter but received ' + str(type(other)))
         return Sorter(other._getStudentList()+self._getStudentList())
 
-    def getAssignments(self) -> 'list[list[str]]':
+    def getAssignments(self):
         """gets the final assignments for the week's parking
 
         Returns:
@@ -142,15 +145,29 @@ class Sorter:
                     results[day]['REG'].append(student)
                 else:
                     results[day]['BART'].append(student)
+
+
+
+        # problem: if someone can park in par and small, they get put in par, but if there's someone 
+        # else later who can park in par but not sml, and par and reg is full, but sml is not, they'd 
+        # get put in barts even when they can park on campus
+
+        #this block here fixes that problem
+        for day in range(5):
+            while len(results[day]['SML'])<Sorter.MAX_SML: #keep doing this until sml is filled
+                try: 
+                    doubleAbilityStudent = list(map(lambda s: s.hasSmallCar(),     results[day]['PAR'] )).index(True) # find index of students in PAR who could be in SML
+                    parallelBartStudent =  list(map(lambda s: s.canParallelPark(), results[day]['BART'])).index(True) # find index of students in BART who could be in PAR
+                except ValueError: #this means one of the required students was not found
+                    break
                 
-                #TODO: decide if this bug is worth fixing
-                # if student.canParallelPark() and not student.hasSmallCar() and len(output[day]['PAR'])==Sorter.MAX_PAR and len(output[day]['SML'])<Sorter.MAX_SML and len(output[day]['REG'])==Sorter.MAX_REG and True in list(map(lambda s: s.canParallelPark() and s.hasSmallCar(), output[day]['PAR'])):
-                #     pass #panic! there's a problem!
-                #     # problem: if someone can park in par and small, they get put in par, but if there's someone 
-                #     # else later who can park in par but not sml, and par and reg is full, but sml is not, they'd 
-                #     # get put in barts even when they can park on campus
+
+                # use the indices found to move the PAR person to SML, making room for the BART student to be in PAR.
+                results[day]['SML'].append(results[day]['PAR'].pop(doubleAbilityStudent))
+                results[day]['PAR'].append(results[day]['BART'].pop(parallelBartStudent))
+
         
-        output = pd.DataFrame(np.zeros((len(self._getStudentList()), 6)), columns = ['Student', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
+        output = pd.DataFrame(np.empty((len(self._getStudentList()), 6), dtype = str), columns = ['Student', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
 
         output.loc[:, 'Student'] = np.array([x.getName() for x in self._getStudentList()])
 
@@ -166,7 +183,7 @@ class Sorter:
         output.reset_index(inplace=True)
         return output.values.tolist()
 
-    def __iter__(self) -> 'Sorter':
+    def __iter__(self):
         """initialization method for for loops, allowing looping through students by rank
 
         Returns:
@@ -175,7 +192,7 @@ class Sorter:
         self.n = -1
         return self
 
-    def __next__(self) -> 'Student':
+    def __next__(self):
         """gets the next ranked student in self.
 
         Returns:
@@ -189,13 +206,20 @@ class Sorter:
 
 
 def main():
-    print('Fetching data...')
-    data = Data()
-    print('Loading data...')
-    students = [Student(i, data) for i in range(len(data.getFormattedInfo()))]
-    sorter = Sorter(students)
-    print('Assigning parking zones and uploading results...')
-    data.loadResults(sorter.getAssignments())
-    print('Parking Assignments Complete!')
+    try:
+        print('Fetching data...')
+        data = Data()
+        print('Loading data...')
+        students = [Student(i, data) for i in range(len(data.getFormattedInfo()))]
+        sorter = Sorter(students)
+        print('Assigning parking zones and uploading results...')
+        assignments = sorter.getAssignments()
+        logging.debug(str(assignments))
+        data.loadResults(assignments)
+        print('Parking Assignments Complete!')
+    except:
+        print("An error occurred. Ask for help.")
+        logging.exception("Exception in Main of Sorter.py")
+        exit()
 
 if __name__ == '__main__': main()

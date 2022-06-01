@@ -36,7 +36,7 @@ class BaseInfo:
     def dummy(self):
         self.allInfo = [['hi','hi','hi'],['pls work'],['ahhhhhh'],['lol', 'ahh']]
     
-    def clearSheet(self, resetInfo:'bool'=False):
+    def clearSheet(self, resetInfo=False):
         """Clears the sheet (excludes the key! Never clear the key, or the first row)
         """
         self.wks.delete_rows(2,self.numRows)
@@ -75,7 +75,7 @@ class BaseInfo:
         for row in self.allInfo:
             self.infoDict[row[1].lower()] = row[2:] # make sure usernames are all lowercase 
 
-    def getUserInfo(self, email:'str') -> list:
+    def getUserInfo(self, email):
         """Gets user's base info given name (accesses dictionary)
 
         Args:
@@ -88,7 +88,7 @@ class BaseInfo:
         return self.infoDict[email]
 
 
-    def getKey(self) -> list:
+    def getKey(self):
         """Gets the key (first row)
 
         Returns:
@@ -96,7 +96,7 @@ class BaseInfo:
         """
         return self.key
 
-    def userInfoFound(self, email:'str') -> bool:
+    def userInfoFound(self, email):
         """Returns if student's base info is found
 
         Args:
@@ -108,7 +108,7 @@ class BaseInfo:
         email = email.lower()
         return email in self.infoDict
 
-    def userEligible(self, email:'str') -> bool:
+    def userEligible(self, email):
         """Returns student's eligibility for driving
 
         Args:
@@ -120,7 +120,7 @@ class BaseInfo:
         email = email.lower()
         return self.infoDict[email][0] == 'Yes'
     
-    def getCarSize(self, email:'str') -> bool:
+    def getCarSize(self, email):
         """Returns student's car size (true if Large, false if small)
 
         Args:
@@ -132,7 +132,7 @@ class BaseInfo:
         email = email.lower()
         return self.infoDict[email][4] == 'Large'
     
-    def getAddress(self, email:'str') -> int:
+    def getAddress(self, email):
         """Returns student's zip code
 
         Args:
@@ -144,7 +144,7 @@ class BaseInfo:
         email = email.lower()
         return int(self.infoDict[email][5])
     
-    def getPara(self, email:'str') -> bool:
+    def getPara(self, email):
         """Returns student's ability to parallel park
 
         Args:
@@ -156,7 +156,7 @@ class BaseInfo:
         email = email.lower()
         return self.infoDict[email][3] == 'Yes'
 
-    def getFirstPeriod(self, email:'str') -> bool:
+    def getFirstPeriod(self, email):
         """Returns student's first period status
 
         Args:
@@ -168,7 +168,7 @@ class BaseInfo:
         email = email.lower()
         return self.infoDict[email][1] == 'Yes'
 
-    def getLastPeriod(self, email:'str') -> bool:
+    def getLastPeriod(self, email):
         """Returns student's last period status
 
         Args:

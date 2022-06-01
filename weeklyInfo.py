@@ -35,7 +35,7 @@ class WeeklyInfo():
         self.generateDict() # generates a dictionary
         self.updateSheet() # updates sheet after duplicates are removed
 
-    def clearSheet(self, resetInfo:'bool'=False):
+    def clearSheet(self, resetInfo=False):
         """Clears the sheet (excludes the key! Never clear the key, or the first row)
         """
         self.wks.delete_rows(2,self.numRows)
@@ -47,7 +47,6 @@ class WeeklyInfo():
         NOTE: inserts the info into the sheet, but subsequent form entries are put at the top...
         """
         self.clearSheet()
-        # print(self.pastWks.row_count)
         self.pastWks.delete_rows(2,self.pastWks.row_count-1)
         self.pastWks.insert_rows(self.allInfo,2)
 
@@ -84,7 +83,7 @@ class WeeklyInfo():
         for row in self.allInfo:
             self.infoDict[row[1].lower()] = row[2:] 
 
-    def getUserInfo(self, email:'str') -> list:
+    def getUserInfo(self, email):
         """Gets user's base info given name (accesses dictionary)
 
         Args:
@@ -97,7 +96,7 @@ class WeeklyInfo():
         return self.infoDict[email]
 
 
-    def getKey(self) -> list:
+    def getKey(self):
         """Gets the key (first row)
 
         Returns:
@@ -105,7 +104,7 @@ class WeeklyInfo():
         """
         return self.key
 
-    def getAllInfo(self) -> list[list]:
+    def getAllInfo(self):
         """Gets all info
 
         Returns:
@@ -113,7 +112,7 @@ class WeeklyInfo():
         """
         return self.allInfo
     
-    def userInfoFound(self, email:'str') -> bool:
+    def userInfoFound(self, email):
         """Returns if student's base info is found
 
         Args:
@@ -125,7 +124,7 @@ class WeeklyInfo():
         email = email.lower()
         return email in self.infoDict
 
-    def userEligible(self, email:'str') -> bool:
+    def userEligible(self, email):
         """Returns student's eligibility for driving
 
         Args:

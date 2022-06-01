@@ -35,7 +35,7 @@ class StrikesInfo():
         for row in self.allInfo:
             self.infoDict[row[0].lower()] = row[1:] 
 
-    def getUserInfo(self, email:'str') -> list:
+    def getUserInfo(self, email):
         """Gets user's base info given name (accesses dictionary)
 
         Args:
@@ -47,7 +47,7 @@ class StrikesInfo():
         email = email.lower()
         return self.infoDict[email]
 
-    def getKey(self) -> list:
+    def getKey(self):
         """Gets the key (first row)
 
         Returns:
@@ -55,7 +55,7 @@ class StrikesInfo():
         """
         return self.key
 
-    def getAllInfo(self) -> list[list]:
+    def getAllInfo(self):
         """Gets all info
 
         Returns:
@@ -63,7 +63,7 @@ class StrikesInfo():
         """
         return self.allInfo
 
-    def userInfoFound(self, email:'str') -> bool:
+    def userInfoFound(self, email):
         """Returns if student's base info is found
 
         Args:
@@ -75,7 +75,7 @@ class StrikesInfo():
         email = email.lower()
         return email in self.infoDict
     
-    def userStrikeHistory(self, email:'str') -> int:
+    def userStrikeHistory(self, email):
         """Returns if student's strike history
 
         Args:
