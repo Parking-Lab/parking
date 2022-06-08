@@ -41,5 +41,8 @@ impl Student{
     pub fn has_small_car(&self) -> bool{
         self.row[0] == 1
     }
+    pub fn get_name(&self) -> str{
+        self.name
+    }
 
 }
