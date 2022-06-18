@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::fs;
 use std::error::Error;
 use serde_json::{Value, Map};
+use rand::distributions::{Normal, Distribution};
 
 pub struct Student{
     name: str,
@@ -22,17 +23,25 @@ impl Student{
     pub fn new(student_name: &str, row: &Vec<i32>) -> Student{
         Student {
             name: *student_name,
-            row: row,
+            row: row.clone(),
         }
     }
 
-    pub fn generate_score(&self, day: u8) -> f32{
+    pub fn generate_score(&self, day: usize) -> f32{
         let crit: u8 = self.row[2..7][day];
         let sports: u8 = self.row[7..12][day];
-        let dist: f32 = Student::DISTANCES[String::from(self.row[1])]?;
-        let carpoolSeniors: f32 = self.row[12][day];
-        let carpoolYoungns: f32 = self.row[13][day];
-        
+        let fp_free = self.row[14];
+        let lp_free = self.row[15];
+        let dist: f32 = Student::DISTANCES[self.row[1]];
+        let carpool_seniors: u8 = self.row[12];
+        let carpool_youngns: u8 = self.row[13];
+        let strikes = self.row[17]
+        let weights: Vec<f32> = vec![16.0, 8.0, 10.0, 40.0, -20];
+        let mut score: f32 = weights.iter().zip(vec![fp_free, lp_free, crit, sports, strikes].iter()).map(|(x, y)| x * (*y as f32)).sum();
+        score *= 1.0 + carpool_seniors as f32 + (carpool_youngns as f32 * 0.25);
+        score += Normal::new(0.0, 5.0);
+
+        score
     }
 
     pub fn can_parallel_park(&self) -> bool{
@@ -41,8 +50,8 @@ impl Student{
     pub fn has_small_car(&self) -> bool{
         self.row[0] == 1
     }
-    pub fn get_name(&self) -> str{
-        self.name
+    pub fn get_name(&self) -> String{
+        String::from(&self.name)
     }
 
 }
