@@ -169,11 +169,11 @@ class Student:
 
 
 
-        listing = [self.fpFree,self.lpFree,crit,sport]
+        listing = [self.fpFree,self.lpFree,sport,crit, self.strikes]
 
         
         #convertResponse = convertResponses(listing)
-        weighting = [16,8,10, 40,-40, -40]
+        weighting = [16,8,20,40,-40,-40]
 
         #listing = [self.fpfree,self.lpfree,self.sports,crit,self.strike, self.crash]
             
