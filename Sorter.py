@@ -3,18 +3,17 @@ Sorter Class
 
 This class holds students, and sorts them based on rank.
 '''
-import pandas as pd
-from Student import Student
-from data import Data
-import numpy as np
 import logging
-
+import toml
+import sys
+import os
 logging.basicConfig(filename='/tmp/parking_sorter.log', level=logging.ERROR)
 class Sorter:
-    MAX_REG = 41
-    MAX_SML = 8
-    MAX_PAR = 4
-    DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] #augh why people why
+    with open('config.toml', 'r') as f:
+        cfg = toml.load(f)['spot-totals']
+        MAX_REG = cfg['Regular_Campus_Spots']
+        MAX_SML = cfg['Small_Campus_Spots']
+        MAX_PAR = cfg['Parallel_Campus_Spots']
 
     def __init__(self, students):
         """constructor for Sorter object. sorts students upon intialization.
@@ -23,7 +22,7 @@ class Sorter:
             students (list[students]): a list of all students to be sorted
         """
         self.students = [[0 for _ in range(5)] for _ in range(len(students))]
-        self.students = pd.DataFrame(self.students, index = students, columns = Sorter.DAYS)
+        self.students = pd.DataFrame(self.students, index = students, columns = [1,2,3,4,5])
         self.students.insert(0, 'name', list(map(lambda x: x.getName(), self._getStudentList())))
 
         self._addScores()
@@ -41,7 +40,7 @@ class Sorter:
         """adds people's scores to the df
         """
         for s in self._getStudentList():
-            for day in Sorter.DAYS:
+            for day in range(5):
                 self.students.at[s, day] = s.generateScore(day)
 
     def add(self, *student):
@@ -74,11 +73,11 @@ class Sorter:
         if day == None:
             return [self[idx, d] for d in range(5)]
         if isinstance(idx, int):
-            return self.students.sort_values(Sorter.DAYS[day], ascending = False).index.values.tolist()[idx]
+            return self.students.sort_values(day, ascending = False).index.values.tolist()[idx]
         if isinstance(idx, str):
-            return self.students.sort_values(Sorter.DAYS[day], axis = 'columns', ascending = False)['name'].to_list().index(idx)
+            return self.students.sort_values(day, axis = 'columns', ascending = False)['name'].to_list().index(idx)
         if isinstance(idx, Student):
-            return self.students.sort_values(Sorter.DAYS[day], axis = 'columns', ascending = False).iloc(idx, Sorter.DAYS[day])
+            return self.students.sort_values(day, axis = 'columns', ascending = False).iloc(idx, day)
         raise TypeError('Expected idx of type int|str|Student but received ' + str(type(idx)))
 
     def delete(self, day, student):
@@ -95,7 +94,7 @@ class Sorter:
         """
         if isinstance(student, int): # it's a rank
             self.students.drop(#        sort by rank on day                 in descending order        get index at rank
-                self.students.sort_values(Sorter.DAYS[day], axis = 'columns', ascending = False).index.values.tolist()[student])
+                self.students.sort_values(day, axis = 'columns', ascending = False).index.values.tolist()[student])
         if isinstance(student, str): # it's a name
             self.students.drop(self.students[self.students['name'] == student]) #drop all columns where the name is student
         if isinstance(student, Student): #it's a student object
@@ -176,7 +175,7 @@ class Sorter:
         for day, data in enumerate(results):
             for zone, students in data.items():
                 for student in students:
-                    output.at[student.getName(), Sorter.DAYS[day]] = zone
+                    output.at[student.getName(), day] = zone
         
         # print(output.head())
 
@@ -204,13 +203,17 @@ class Sorter:
         else:
             raise StopIteration
 
+def run_sort():
+    import pandas as pd
+    from Student import Student #move imports here because they're slow
+    from data import Data
+    import numpy as np
 
-def main():
     try:
         print('Fetching data...')
         data = Data()
         print('Loading data...')
-        students = [Student(i, data) for i in range(len(data.getFormattedInfo()))]
+        students = [Student(data.getFormattedInfo(i)) for i in range(len(data.getFormattedInfo()))]
         sorter = Sorter(students)
         print('Assigning parking zones and uploading results...')
         assignments = sorter.getAssignments()
@@ -218,8 +221,38 @@ def main():
         data.loadResults(assignments)
         print('Parking Assignments Complete!')
     except:
-        print("An error occurred. Ask for help.")
+        print("An error occurred while sorting. Ask for help.")
+        print("Logs saved in /tmp/parking_sorter.log.")
         logging.exception("Exception in Main of Sorter.py")
         exit()
 
+def main():
+    if len(sys.argv)>1:
+        if sys.argv[1]=='config':
+            print('config file opened in editor.')
+            print('remember to save before closing.')
+            os.system("open -a TextEdit ~/parking/config.toml")
+        elif sys.argv[1]=='run':
+            run_sort()
+        elif sys.argv[1]=='-h' or sys.argv[1]=='--help':
+            print("usage: parksort [-h] [command]\n");
+            print("assign parking spots, or configure the algorithm.\n");
+            print("commands:");
+            print("   run                  Run the sorter, assigning parking to the students and pushing the changes to the google sheet.");
+            print("   config               Configure parameters such as the scoring weights and total spots available\n");
+            print("   uninstall            Remove this software and related config files, and undo any changes made to the system by the program. Does not uninstall python.")
+            print("options:");
+            print("   -h, --help           show this help message and exit");
+        elif sys.argv[1]=='uninstall':
+            if input('Are you sure you want to uninstall this program? [Y/n] ').lower()=='n': 
+                print('Aborting. Program is still installed.')
+                exit()
+            #uninstall everything
+            os.system("sed -i '' '/alias parksort/d' ~/.bash_profile ~/.zshrc;rm -rf ~/parking ~/.config/gspread;")
+        else:
+            print("Unrecognized argument:", sys.argv[1])
+            print("run `parksort -h` for help.")
+    else:
+        print("Parksort: a lightweight python command line utility to help automate senior parking assignments at CSUS. Written by the 2021-22 CS and HCS classes in collaboration.\n")
+        print("For usage information, pass the -h or --help flag: `parksort -h`")
 if __name__ == '__main__': main()

@@ -11,17 +11,17 @@ Student Class
 
 This class holds information for the student object
 '''
-from data import Data
 import json
+import toml
 import numpy as np
 
 class Student: 
 
     #! this code runs at *definition*, so basically when this file is imported.
-    with open('distances.json', 'r') as f:
-        DISTANCES = json.load(f)
+    with open('distances.json', 'r') as f: DISTANCES = json.load(f)
+    with open('config.toml', 'r') as f:   WEIGHTS =   toml.load(f)['weights']
     
-    def __init__(self,row,data):
+    def __init__(self,row):
         '''creates a Student object with instance variables corresponding to the student's google sheet information
 
         Args:
@@ -35,81 +35,20 @@ class Student:
             uses GSheet class to define instance variables (name, type of car, weights, etc.)
 
         '''
-        #do we run the program for the specific day or for all days at once?
 
-        #save the weights sheet to the computer every time for up to dateness?
-
-        #score
-        self.score = 0
-
-
-        #day of the week that this program is being run for
-            
-        self.data = data
-        self.data = self.data.getFormattedInfo()
-
-        
-        
-        self.row = self.data[row]
-
-        #print(self.row)
-
-        self.name = self.row[0]
-        self.car = self.row[1]
-        self.distance = self.row[2]
-
-        #critical need for days of the week
-        self.mon_crit = self.row[3]
-        self.tue_crit = self.row[4]
-        self.wed_crit = self.row[5]
-        self.thur_crit = self.row[6]
-        self.fri_crit = self.row[7]
-        
-        self.sports_mon = self.row[8]
-        self.sports_tue = self.row[9]
-        self.sports_wed = self.row[10]
-        self.sports_thu = self.row[11]
-        self.sports_fri = self.row[12]
-        
-        self.carpoolSeniors = self.row[13]
-        self.carpoolYoungns = self.row[14]
-
-        #first period and last period free
-        self.fpFree = self.row[15]
-        self.lpFree = self.row[16]
-
-        #boolean
-        self.parallel = self.row[17]
-
-        self.strikes = self.row[18]
-
-        
-
-        
-
+        self.data = {
+            'name':    row[0],
+            'big_car': row[1],
+            'zipcode': row[2],
+            'crit':    row[3:8],
+            'sports':  row[8:13],
+            'carpool': row[13:15], #seniors=13, youngns=14
+            'free':    row[15:17], #last period: 15, first: 16
+            'par':     row[17],
+            'strikes': row[18]
+        }
         #the amount of days it has been since the student has been able to park on campus - adjust score based on this variable in generateScore()
-        self.spot_since = 0
-        
-        self.zone = ''
-        
-##        #WEIGHTS
-##        self.weight_sheet = weight_sheet
-##        
-##        #has to retrieve the second column from the weights sheet
-##        self.weight_column = self.weight_sheet.getColumn(2,'weight_sheet.smth')
-##
-##        self.carpoolUnder_weight = self.weight_column[2]
-##        self.carpoolSenior_weight = self.weight_column[3]
-##        self.fpfree_weight = self.weight_column[4]
-##        self.lpfree_weight = self.weight_column[5]
-##
-##        self.sports_weight = self.weight_column[6]
-##        self.crit_weight = self.weight_column[7]
-##        
-##        self.commute_weight = self.weight_column[8]
-##        self.strike_weight = self.weight_column[9]
-##        self.crash_weight = self.weight_column[10]
-##
+
     def __repr__(self):
         return 'Student: ' + self.name
 
@@ -117,9 +56,7 @@ class Student:
         return self.name
 
     def canParallelPark(self):
-        if self.parallel == 1:
-            return True
-        return False
+        return bool(self.parallel)
 
     def hasSmallCar(self):
         return not self.car
@@ -133,101 +70,33 @@ class Student:
         return hash(self.name)
     
     def generateScore(self,day):
-        '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone
+        '''uses weights to return a score that the Sorter function/class will use to assign the Student a parking zone'''
 
-        might use private methods to isolate that calculation of each category's weight'''
+        student_attrs = np.array([self.data['free'] + 
+                                [self.data['sports'][day]] + 
+                                [self.data['crit'][day]] + 
+                                [self.data['strikes']]])
 
+        weights = np.array([[Student.WEIGHTS[i] for i in [
+            "First_Period_Free",
+            "Last_Period_Free",
+            "Sports_Away_Game",
+            "Critical_Need",
+            "Strike",
+            "Crash"]]])
 
-        '''To be written by Nambita and Aditya'''
+        score = student_attrs.dot(weights.T) #take dot product (need to transpose because dot is just matmul so u dot v needs to be [u][v]^T)
 
-        self.day = day
-        
-
-        #print(self.name)
-
-        if self.day == 'Monday': 
-            crit = self.mon_crit
-        if self.day == 'Tuesday':
-            crit = self.tue_crit
-        if self.day == 'Wednesday':
-            crit = self.wed_crit
-        if self.day == 'Thursday':
-            crit = self.thur_crit
-        if self.day == 'Friday':
-            crit = self.fri_crit
-
-        if self.day == 'Monday': 
-            sport = self.sports_mon
-        if self.day == 'Tuesday':
-            sport = self.sports_tue
-        if self.day == 'Wednesday':
-            sport = self.sports_wed
-        if self.day == 'Thursday':
-            sport = self.sports_thu
-        if self.day == 'Friday':
-            sport = self.sports_fri        
-
-
-
-        listing = [self.fpFree,self.lpFree,sport,crit, self.strikes]
-
-        
-        #convertResponse = convertResponses(listing)
-        weighting = [16,8,20,40,-40,-40]
-
-        #listing = [self.fpfree,self.lpfree,self.sports,crit,self.strike, self.crash]
-            
-        
-        #convertResponse = convertResponses(listing)
-        scorelist = []
-        
-        for i in range(len(listing)):
-            num = listing[i] * weighting[i]
-            scorelist.append(num)
-
-
-        score = sum(scorelist)
-                
-        
-        #! start reid's code, sorry for editing your method aditya and nambita
-        dayIdx = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].index(day)
         #* multiply the score by a the carpool multiplier
         score *= (
-                        1 +                                  # start with one, so by default it's x1, so we get same score
-                        self.carpoolYoungns[dayIdx]*0.25 +   # total minus seniors is num underclassmen, mult by 0.25 bc we weight underclassmen less
-                        self.carpoolYoungns[dayIdx]          # add one multiplication per senior, because you're freeing up another spot
+                        1 +                                                                                 # start with one, so by default it's x1, so we get same score
+                        self.data['carpool'][day]*Student.WEIGHTS['Carpool_Multiplier_Per_Non_Senior'] +    # total minus seniors is num underclassmen, mult by 0.25 bc we weight underclassmen less
+                        self.data['carpool'][day]*Student.WEIGHTS['Carpool_Multiplier_Per_Senior']          # add one multiplication per senior, because you're freeing up another spot
                     )
         
-        score += np.random.normal(0, 5) #add random bit, mean 0, std. dev 5
-        #! end reid's code
-
-        #print('name')
-        #print(self.name)
-                
-
-        #scoring = distance(score, self.commute)
-        #print(scoring)
-        #scorewstrikes = self.strike(score, self.strike, self.crash)
-        scorewstrikes = score
-
-        return scorewstrikes
-
-    def strike(self,score, strike, crash):
-        strike = strike * -20
-        crash = crash * -500
-        scorewstrikes = score + strike + crash
-        return scorewstrikes
-
-    def getData(self):
-        '''returns student score as a list'''
+        score += np.random.normal(0, Student.WEIGHTS['Random_Factor_STDEV']) #add random stuff, mean 0
         
-        score1 = self.generateScore('Monday')
-        score2 = self.generateScore('Tuesday')
-        score3 = self.generateScore('Wednesday')
-        score4 = self.generateScore('Thursday')
-        score5 = self.generateScore('Friday')       
-
-        return [score1,score2,score3,score4,score5]
+        return score + Student.distScore(str(self.data['zipcode']))
 
     @staticmethod
     def distScore(zipcode):
@@ -246,24 +115,3 @@ class Student:
             return Student.DISTANCES[zipcode]*0.9
         except: #hehe general except go brrrrrrrrr (i don't want to put KeyError cause idk if that's what this raises, idek if this is a dict or json object or what)
             return 0 #not a valid zipcode, their fault, score 0
-
-def main():
-    data = Data()
-    student = Student(0,data)
-    student_score = student.getData()
-    print(student.name)
-    print(student_score)
-
-    print(len(student.data))
-
-    print(student.hasSmallCar())
-
-    for i in range(len(student.data)-1):
-        student2 = Student(i+1,data)
-        student2_score = student2.getData()
-        print(student2.name)
-        print(student2_score)
-        
-    
-
-if __name__ == '__main__': main()

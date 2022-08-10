@@ -1,0 +1,16 @@
+[weights]
+First_Period_Free = 16
+Last_Period_Free = 8
+Sports_Away_Game = 20
+Critical_Need = 40
+Strike = -40
+Crash = -40
+Carpool_Multiplier_Per_Senior = 1
+Carpool_Multiplier_Per_Non_Senior = 0.25
+Distance = 0.9
+Random_Factor_STDEV = 5
+
+[spot-totals]
+Regular_Campus_Spots = 41
+Small_Campus_Spots = 8
+Parallel_Campus_Spots = 4

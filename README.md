@@ -48,7 +48,7 @@ wget https://github.com/Parking-Lab/parking/archive/refs/heads/py2.7-release.zip
 ```
 
 ## 2. Download the parking_service_account.json:
-1. Get the parking_service_account.json file from asoong23@csus.org
+1. Get the parking_service_account.json file from asoong23@csus.org or rdye23@csus.org
 2. Download parking_service_account.json and make sure the file is in Downloads
 > **Warning**
 > Never share this file with anyone or upload it anywhere. It contains sensitive information.

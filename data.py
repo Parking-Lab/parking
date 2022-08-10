@@ -144,13 +144,13 @@ class Data:
             self.finalData.append(formattedRow)
 
     
-    def getFormattedInfo(self):
+    def getFormattedInfo(self, row = None):
         """Gets all information in a formatted fashion (not ordered by name, but abides by set format in TRUE_WEIGHTS)
 
         Returns:
             list[list]: final, formatted data
         """
-        return self.finalData
+        return self.finalData if row==None else self.finalData[row]
     
     def getKey(self):
         """Gets the key
