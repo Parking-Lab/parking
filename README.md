@@ -9,11 +9,15 @@
   - [2. Download the parking_service_account.json:](#2-download-the-parking_service_accountjson)
   - [3. Install everything:](#3-install-everything)
 - [Using the program](#using-the-program)
+- [Adding Strikes](#adding-strikes)
 - [Uninstalling parksort](#uninstalling-parksort)
 
 # Quick Links
-[This week's parking results](https://docs.google.com/spreadsheets/d/1nRXzXrlvIBJL-9Wj8XlBryqW488KrLgA9EKvBSnCaSg/edit#gid=1448752000)  
-[Project Requirements Document (project overview)](https://docs.google.com/document/d/10XjM5ys3_QfG48dqYhJT48CZliQvoncWu97uxb0euo8/edit# )
+[This week's parking results](https://docs.google.com/spreadsheets/d/1nRXzXrlvIBJL-9Wj8XlBryqW488KrLgA9EKvBSnCaSg/edit?usp=sharing)  
+[Project Requirements Document (project overview)](https://docs.google.com/document/d/10XjM5ys3_QfG48dqYhJT48CZliQvoncWu97uxb0euo8/edit?usp=sharing)  
+[Instructions Document](https://docs.google.com/document/d/1gJesK8ENOFGjF4wLqBwGMhryg9MUuz-2pt4Its5rw40/edit?usp=sharing)  
+All of the information in this document is also available in the instructions document linked above. That document contains some important links as well.
+
 # Parking Results Legend
 SML: On-campus parking, spots 38-46 (Small spots)  
 REG: On-campus parking, spots 52-89  
@@ -69,10 +73,16 @@ The program is now ready to use. Further instructions and documentation are avai
 
 # Using the program
 This program is a command line utility, meaning that it runs in terminal and has a text-based interface. It is called `parksort`.
-To run the sort, just run this command:
+To run the sort, run this command:
 ```shell
 ~$ parksort run
 ```
+Then, after you see the "Pasking Assignments Complete!" message, there are a few steps to reset everything to be used again the next week:
+1. Go to the WEEKLY form as an editor
+2. Navigate to Responses tab
+3. Click the three dots (⋮) above accepting responses [photo help](https://drive.google.com/file/d/1aWjVcalhatjTinB-0vUGQ_9HJGRdVD5o/view?usp=sharing)
+4. Select Delete all responses (bottom-most option) [photo help](https://drive.google.com/file/d/1aWjVcalhatjTinB-0vUGQ_9HJGRdVD5o/view?usp=sharing)
+
 For a general blurb:
 ```shell
 ~$ parksort
@@ -86,7 +96,15 @@ And to change the sort settings:
 ```shell
 ~$ parksort config
 ```
-And that's it!
+And that's it!  
+
+---------
+# Adding Strikes
+If a student parks in the wrong spot, crashes, or something like that, you can add a strike to their parking history, which will hurt their ability to get an on-campus parking spot.  
+To do this,
+1. Navigate to the Students Worksheet on the CSUS Parking Data Sheet
+2. Navigate to the offender
+3. Increase Strike History by one
 
 ---------  
 # Uninstalling parksort
