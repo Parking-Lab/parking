@@ -15,10 +15,9 @@ cd parking
 /usr/bin/python2.7 listStudents.py
 cd
 
-#make an alias in bashrc to the runner file
-echo  "alias parksort=\"f(){ cd ~/parking; /usr/bin/python2.7 Sorter.py \"\$@\"; cd - > /dev/null; unset -f f;}; f\"" >> ~/.zshrc
-echo  "alias parksort=\"f(){ cd ~/parking; /usr/bin/python2.7 Sorter.py \"\$@\"; cd - > /dev/null; unset -f f;}; f\"" >> ~/.bash_profile #backwards compatability!
-
+#make the function in bashrc/zshrc to call the runner file
+echo  "parksort(){ cd ~/parking; /usr/bin/python2.7 Sorter.py \"\$@\"; cd - > /dev/null;}" >> ~/.zshrc
+echo  "parksort(){ cd ~/parking; /usr/bin/python2.7 Sorter.py \"\$@\"; cd - > /dev/null;}" >> ~/.bash_profile  #backwards compatability!
 source ~/.zshrc #get those updates
 
 #yay! done!
