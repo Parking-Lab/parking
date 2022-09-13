@@ -244,7 +244,7 @@ def main():
             print("options:");
             print("   -h, --help           show this help message and exit");
         elif sys.argv[1]=='uninstall':
-            if input('Are you sure you want to uninstall this program? [Y/n] ').lower()=='n': 
+            if raw_input('Are you sure you want to uninstall this program? [Y/n] ').lower()=='n': 
                 print('Aborting. Program is still installed.')
                 exit()
             #uninstall everything
